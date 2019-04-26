@@ -46,20 +46,6 @@ Also known as “;” next command is always executed.
 
 * `print()`
 
-Command Line
-Input
-Read input
-If input contains * -> symbol evaluate
-If contains text -> string evaluate
-Put everything in tree evaluate recursively
-Add subtrafct dnfianofa
-Git add .
-|| && ; -> stack/queue
-
-Commands class
--different command classes
-
-
 
 #
 
