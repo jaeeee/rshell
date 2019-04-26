@@ -8,7 +8,7 @@ Our program will be a basic command shell that will be created using C++. The sh
 
 ## Classes
 
-### main.cpp
+### client.cpp
 Provides the interface in which the user can use the console/shell. Takes user input.
 
 ### base.cpp
