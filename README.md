@@ -14,12 +14,9 @@ Provides the interface in which the user can use the console/shell. Takes user i
 ### base.cpp
 Base class, holds virtual functions.
 
-* execute()
-**Detect type of command based on string input
-**Runs the command
+* execute() - Detect type of command based on string input. Runs the command.
 
-* print()
-Prints a new line, and $
+* print() - Prints a new line, and $
 
 ### input.cpp
 Process command function, takes in parameter string
