@@ -8,27 +8,27 @@ Our program will be a basic command shell that will be created using C++. The sh
 
 ## Classes
 
-# main.cpp
+### main.cpp
 Provides the interface in which the user can use the console/shell. Takes user input.
 
-# base.cpp
+### base.cpp
 Base class, holds virtual functions.
 
-execute()
--Runs the command
+* execute()
+* Runs the command
 
 
 
-# input.cpp
+### input.cpp
 Process command function, takes in parameter string
 
-# and.cpp
+### and.cpp
 
 
-# or.cpp
+### or.cpp
 
 
-# semicolon.cpp
+### semicolon.cpp
 
 
 Command Line
