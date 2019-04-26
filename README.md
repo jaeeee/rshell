@@ -15,7 +15,7 @@ Provides the interface in which the user can use the console/shell. Takes user i
 Base class, holds virtual functions.
 
 * execute()
-* Runs the command
+- Runs the command
 
 
 
