@@ -9,7 +9,7 @@ Our program will be a basic command shell that will be created using C++. The sh
 ## Classes
 
 ### client.cpp
-Provides the interface in which the user can use the console/shell. Takes user input.
+* `printMenu()` - Provides the interface in which the user can use the console/shell. Takes user input.
 
 ### input.cpp
 Process command function, takes in parameter string
