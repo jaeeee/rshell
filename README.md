@@ -8,43 +8,43 @@ Our program will be a basic command shell that will be created using C++. The sh
 
 ## Classes
 
-`main.cpp`
+### main.cpp
 Provides the interface in which the user can use the console/shell. Takes user input.
 
-`base.cpp`
+### base.cpp
 Base class, holds virtual functions.
 
-* execute() - Detect type of command based on string input. Runs the command.
+* `execute()` - Detect type of command based on string input. Runs the command.
 
-* print() - Prints a new line, and $
+* `print()` - Prints a new line, and $
 
-`input.cpp`
+### input.cpp
 Process command function, takes in parameter string
 
-* execute()
+* `execute()`
 
-* print()
+* `print()`
 
-`and.cpp`
+### and.cpp
 Also known as “&&” next command executed only if the first command succeeds.
 
-* execute()
+* `execute()`
 
-* print()
+* `print()`
 
-`or.cpp`
+### or.cpp
 Also known as “||” next command executed only if the first command fails.
 
-* execute()
+* `execute()`
 
-* print()
+* `print()`
 
-`semicolon.cpp`
+### semicolon.cpp
 Also known as “;” next command is always executed.
 
-* execute()
+* `execute()`
 
-* print()
+* `print()`
 
 Command Line
 Input
