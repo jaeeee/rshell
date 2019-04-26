@@ -5,13 +5,13 @@
 Our program will be a basic command shell that will be created using C++. The shell will be able to take in and execute standard commands. It will also have 3 connectors: "||", "&&", and ";". They will allow the user to run multiple commands at once. The composite pattern will be used to handle all commands and operators. We will have a base class that connects characters and images.
 
 ## Diagram
-
+---
 ## Classes
 
-* main.cpp
+# main.cpp
 Provides the interface in which the user can use the console/shell. Takes user input.
 
-* base.cpp
+# base.cpp
 Base class, holds virtual functions.
 
 execute()
@@ -19,16 +19,16 @@ execute()
 
 
 
-* input.cpp
+# input.cpp
 Process command function, takes in parameter string
 
-* and.cpp
+# and.cpp
 
 
-* or.cpp
+# or.cpp
 
 
-* semicolon.cpp
+# semicolon.cpp
 
 
 Command Line
