@@ -2,7 +2,7 @@
 > Spring 2019 - Daniel Kwong (862032167) and Jason Chang (862046747)
 
 ## Introduction
-Our program will be a basic command shell that will be created using C++. The shell will be able to take in and execute standard commands. It will also have 3 connectors: "||", "&&", and ";". They will allow the user to run multiple commands at once. The composite pattern will be used to handle all commands and operators. We will have a base class that connects characters and images.
+Our program will be a basic command shell that will be created using C++. The shell will be able to take in and execute standard commands. It will also have 3 connectors: "||", "&&", and ";". They will allow the user to run multiple commands at once. The composite pattern will be used to handle all commands and operators. We will have a base class that connects all of the classes together as an interface. The subclasses will include regular input classes that will take in and and operators that come in as inputs.
 
 ## Diagram
 
@@ -15,21 +15,39 @@ Provides the interface in which the user can use the console/shell. Takes user i
 Base class, holds virtual functions.
 
 * execute()
-- Runs the command
+Detect type of command based on string input
+Runs the command
 
-
+* print()
+Prints a new line, and $
 
 ### input.cpp
 Process command function, takes in parameter string
 
-### and.cpp
+* execute()
 
+* print()
+
+### and.cpp
+Also known as “&&” next command executed only if the first command succeeds.
+
+* execute()
+
+* print()
 
 ### or.cpp
+Also known as “||” next command executed only if the first command fails.
 
+* execute()
+
+* print()
 
 ### semicolon.cpp
+Also known as “;” next command is always executed.
 
+* execute()
+
+* print()
 
 Command Line
 Input
