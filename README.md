@@ -15,8 +15,8 @@ Provides the interface in which the user can use the console/shell. Takes user i
 Base class, holds virtual functions.
 
 * execute()
-Detect type of command based on string input
-Runs the command
+**Detect type of command based on string input
+**Runs the command
 
 * print()
 Prints a new line, and $
