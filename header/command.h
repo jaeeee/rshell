@@ -11,11 +11,11 @@ class Command : public Base {
 protected:
   string cmd;
 public:
-  Command() { };
+  Command() { }
   Command(string &input) {
     cmd = input;
-  };
-  virtual bool execute();
+  }
+  virtual bool execute() { return false;}
   string getCommand() {
     return cmd;
   }

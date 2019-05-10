@@ -2,6 +2,7 @@
 #define CLIENT_H
 #include "../header/command.h"
 #include "../header/base.h"
+#include "../header/client.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -19,11 +20,11 @@ protected:
 public:
   Client() {
     root = 0;
-  };
+  }
 
   Client(string& commandInput) {
     command = commandInput;
-  };
+  }
 
   void init();
 
