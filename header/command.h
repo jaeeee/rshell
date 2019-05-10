@@ -1,6 +1,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
-
+#include <iostream>
+#include <string>
 using namespace std;
 
 class Base;
