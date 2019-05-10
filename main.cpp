@@ -25,9 +25,17 @@ int main()
   // char *envp[] = { (char*) "PATH=/bin", 0 };
   while (1) {
     initMenu();
-    char bruh;
-    cin >> bruh;
-    cout << bruh << endl;
+    // char bruh;
+    // cin >> bruh;
+    // cout << bruh << endl;
+    char* args[2];
+string dummy;
+    cin >> dummy;
+    args[0] = (char*)dummy.c_str();
+    args[1] = NULL;
+    if (execvp (args[0],args) == -1) {
+      perror("exec");
+    }
     // break;
   }
 // }
