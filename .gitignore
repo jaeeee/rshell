@@ -37,3 +37,17 @@ test
 # CMake Temp Files
 CMakeCache.txt
 CMakeFiles
+
+# IGNORE STUFF FROM LAB
+.DS_Store
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+bin/
+lib/
+base.hpp.gch
+Makefile
+a.out
+c-echo
+test
+program
