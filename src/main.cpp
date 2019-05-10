@@ -23,8 +23,8 @@ void processCommand(char cmd[], char *par[]) {
 int main()
 {
   // char *envp[] = { (char*) "PATH=/bin", 0 };
+  //pid_t pid = fork();
   while (1) {
-    pid_t pid = fork();
     initMenu();
     // char bruh;
     // cin >> bruh;
@@ -32,18 +32,24 @@ int main()
     char* args[2];
     string dummy;
     cin >> dummy;
-    if (pid != 0) { //parent
-      wait(NULL);
-    } else {
-    args[0] = (char*)dummy.c_str();
-    args[1] = NULL;
-    if (strcmp(dummy.c_str(), "exit") == 0) {
+
+    if (dummy == "exit") {
       break;
     }
-  }
-    if (execvp (args[0],args) == -1) {
-      perror("exec");
+
+    args[0] = (char*)dummy.c_str();
+    args[1] = NULL;
+
+    if (fork() == 0) { //wait for child
+      if (execvp (args[0],args) == -1) {
+        perror("exec");
+      }
     }
+    else {
+      wait(NULL);
+    }
+
+
     // break;
 }
 // }
