@@ -29,7 +29,7 @@ int main()
     // cin >> bruh;
     // cout << bruh << endl;
     char* args[2];
-string dummy;
+    string dummy;
     cin >> dummy;
     args[0] = (char*)dummy.c_str();
     args[1] = NULL;
