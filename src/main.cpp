@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include "../header/client.h"
+
 using namespace std;
 
 void initMenu() {
@@ -29,26 +31,27 @@ int main()
     // char bruh;
     // cin >> bruh;
     // cout << bruh << endl;
-    char* args[2];
-    string dummy;
-    cin >> dummy;
-
-    if (dummy == "exit") {
-      break;
-    }
-
-    args[0] = (char*)dummy.c_str();
-    args[1] = NULL;
-
-    if (fork() == 0) { //wait for child
-      if (execvp (args[0],args) == -1) {
-        perror("exec");
-      }
-    }
-    else {
-      wait(NULL);
-    }
-
+    // char* args[2];
+     string dummy;
+     getline(cin, dummy);
+    //
+    // if (dummy == "exit") {
+    //   break;
+    // }
+    //
+    // args[0] = (char*)dummy.c_str();
+    // args[1] = NULL;
+    //
+    // if (fork() == 0) { //wait for child
+    //   if (execvp (args[0],args) == -1) {
+    //     perror("exec");
+    //   }
+    // }
+    // else {
+    //   wait(NULL);
+    //}
+    Client* user = new Client(dummy);
+    user->parse();
 
     // break;
 }
