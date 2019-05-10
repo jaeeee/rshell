@@ -14,14 +14,22 @@ void initMenu() {
     initilization = 0;
     // system("clear")
   }
-  printf("$"); //prompt
+  printf("root@rshell: ~$ "); //prompt
 }
 
+void processCommand(char cmd[], char *par[]) {
+}
 
 int main()
 {
-  // while(1) {
-  initMenu();
+  // char *envp[] = { (char*) "PATH=/bin", 0 };
+  while (1) {
+    initMenu();
+    char bruh;
+    cin >> bruh;
+    cout << bruh << endl;
+    // break;
+  }
 // }
   /**
   FORK AND WAIT TESTING COMMANDS
