@@ -7,8 +7,22 @@
 
 using namespace std;
 
+void initMenu() {
+  static int initilization = 1;
+  if (initilization) {
+    write(STDOUT_FILENO, " \e[1;1H\e[2J",12);
+    initilization = 0;
+    // system("clear")
+  }
+  printf("$"); //prompt
+}
+
+
 int main()
 {
+  // while(1) {
+  initMenu();
+// }
   /**
   FORK AND WAIT TESTING COMMANDS
   **/
@@ -32,14 +46,14 @@ int main()
 /**
 "LS" CODE
 **/
-char* args[2];
-string ls = "ls";
-
-args[0] = (char*)ls.c_str();
-args[1] = NULL;
-if (execvp (args[0],args) == -1) {
-  perror("exec");
-}
+// char* args[2];
+// string ls = "ls";
+//
+// args[0] = (char*)ls.c_str();
+// args[1] = NULL;
+// if (execvp (args[0],args) == -1) {
+//   perror("exec");
+// }
 
 
 return 0;
