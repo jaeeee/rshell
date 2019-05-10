@@ -3,28 +3,44 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 using namespace std;
 
 int main()
 {
-  char* args[2];
-  string ls = "ls";
-  args[0] = (char*)ls.c_str();
-  args[1] = NULL;
+  /**
+  FORK AND WAIT TESTING COMMANDS
+  **/
+// pid_t pid = fork();
+// if (pid == -1) {
+//   perror("fork");
+// }
+// if (pid == 0) {
+//   //child
+//   cout << "child: " << pid << endl;
+// }
+// if (pid > 0 ) {
+//   //parent
+//   if (wait(0) == -1) {
+//     perror("wait");
+//   }
+//   cout << "parent: " << pid << endl;
+//   // while(1);
+// }
 
-  pid_t pid = fork();
+/**
+"LS" CODE
+**/
+char* args[2];
+string ls = "ls";
 
-  if (pid == 0) {
-    cout << "child: " << pid << endl;
-    if (execvp (args[0], args) == -1) {
-      perror ("exec");
-    }
-  }
-  if (pid > 0) {
-    if (wait(0) == -1) {
-      perror("wait");
-    }
-    cout << "parent: " << pid << endl;
-  }
+args[0] = (char*)ls.c_str();
+args[1] = NULL;
+if (execvp (args[0],args) == -1) {
+  perror("exec");
+}
+
+
+return 0;
 }
