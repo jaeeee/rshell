@@ -2,6 +2,7 @@
 #define COMMAND_H
 #include <iostream>
 #include <string>
+#include "base.h"
 using namespace std;
 
 class Base;

@@ -22,7 +22,7 @@ public:
   virtual bool execute() = 0;
   virtual string getCommand() = 0;
 
-}
+};
 
 
 
