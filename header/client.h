@@ -19,6 +19,7 @@ public:
     command = commandInput;
   };
 
+  void init();
 };
 
 
