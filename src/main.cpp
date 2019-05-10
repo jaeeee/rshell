@@ -24,6 +24,7 @@ int main()
 {
   // char *envp[] = { (char*) "PATH=/bin", 0 };
   while (1) {
+    pid_t pid = fork();
     initMenu();
     // char bruh;
     // cin >> bruh;
@@ -31,13 +32,20 @@ int main()
     char* args[2];
     string dummy;
     cin >> dummy;
+    if (pid != 0) { //parent
+      wait(NULL);
+    } else {
     args[0] = (char*)dummy.c_str();
     args[1] = NULL;
+    if (strcmp(dummy.c_str(), "exit") == 0) {
+      break;
+    }
+  }
     if (execvp (args[0],args) == -1) {
       perror("exec");
     }
     // break;
-  }
+}
 // }
   /**
   FORK AND WAIT TESTING COMMANDS
