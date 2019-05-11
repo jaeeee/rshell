@@ -53,7 +53,9 @@ if (temp.at(1) == '&') {
 // if ()
 break;
 case '|':
-cout << "found case | lmfao" << endl;
+
+
+
 break;
 default: //cases for non operators
 
