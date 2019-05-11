@@ -10,16 +10,13 @@ class Base;
 
 class Pipe_Connector : public Connector {
 public:
-  Pipe_Connector() {
-
-  }
+  Pipe_Connector() { }
   Pipe_Connector(Base *left, Base *right) : Connector(left, right) {
 
   }
 
   bool execute();
   string getCommand();
-  // string getCommand() {return "a"; }
 };
 
 #endif

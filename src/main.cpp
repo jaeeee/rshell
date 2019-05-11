@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
@@ -35,9 +36,9 @@ int main()
      string dummy;
      getline(cin, dummy);
     //
-    if (dummy == "exit") {
-      break;
-    }
+    // if (dummy.lower() == "exit") {
+    //   break;
+    // }
 
     // args[0] = (char*)dummy.c_str();
     // args[1] = NULL;

@@ -10,9 +10,7 @@ class Base;
 
 class And_Connector : public Connector {
 public:
-  And_Connector() {
-
-  }
+  And_Connector() { }
   And_Connector(Base *left, Base *right) : Connector(left, right) {
 
   }

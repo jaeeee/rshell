@@ -9,11 +9,12 @@ class Base;
 class Connector;
 
 bool Pipe_Connector::execute() {
-  left->execute();
+  if(left->execute()) {
+    return false;
+  }
   return right->execute();
 }
 
 string Pipe_Connector::getCommand() {
-  //impliment
-return "";
+  return left->getCommand() + " || " + right->getCommand();
 }

@@ -13,6 +13,5 @@ bool And_Connector::execute() {
 }
 
 string And_Connector::getCommand() {
-  //impliment
-return "";
+  return left->getCommand() + " && " + right->getCommand();
 }

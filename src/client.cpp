@@ -78,7 +78,7 @@ void Client::parse() {
           string c2str = command.substr(indexOfSpace + 3, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
+          //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
       // remove the space, trucnate command accordingly
     }
 

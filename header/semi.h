@@ -10,16 +10,23 @@ class Base;
 
 class Semi_Connector : public Connector {
 public:
-  Semi_Connector() {
+  Semi_Connector() { }
 
-  }
   Semi_Connector(Base *left, Base *right) : Connector(left, right) {
 
   }
 
   bool execute();
   string getCommand();
-  // string getCommand() {return "a"; }
+  // bool execute() {
+  //   left->execute();
+  //   return right->execute();
+  // }
+  //
+  // string getCommand() {
+  //   return left->getCommand() + "; " + right->getCommand();
+  // }
+
 };
 
 #endif
