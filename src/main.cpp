@@ -35,10 +35,10 @@ int main()
      string dummy;
      getline(cin, dummy);
     //
-    // if (dummy == "exit") {
-    //   break;
-    // }
-    //
+    if (dummy == "exit") {
+      break;
+    }
+
     // args[0] = (char*)dummy.c_str();
     // args[1] = NULL;
     //

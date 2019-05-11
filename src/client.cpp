@@ -2,6 +2,7 @@
 #include "../header/client.h"
 #include "../header/command.h"
 #include "../header/connector.h"
+#include "../header/and.h"
 
 #include <iostream>
 #include <string>
@@ -47,6 +48,7 @@ if (temp.at(1) == '&') {
   // cout << temp << endl;
   Base* cmd2 = new Command(temp);
   Base* addC = new And_Connector(cmd1, cmd2);
+  cout << "2 &&" << endl;
 }
 // if ()
 break;

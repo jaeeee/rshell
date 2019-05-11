@@ -17,7 +17,8 @@ public:
 
   }
 
-  bool execute();
-}
+  bool execute() {return false;};
+  string getCommand() {return "a"; }
+};
 
 #endif
