@@ -1,5 +1,5 @@
-#ifndef Semi_H
-#define Semi_H
+#ifndef SEMI_H
+#define SEMI_H
 
 #include "base.h"
 #include "connector.h"
@@ -18,6 +18,7 @@ public:
   }
 
   bool execute();
+  string getCommand();
   // string getCommand() {return "a"; }
 };
 

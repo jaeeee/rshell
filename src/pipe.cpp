@@ -12,3 +12,8 @@ bool Pipe_Connector::execute() {
   left->execute();
   return right->execute();
 }
+
+string Pipe_Connector::getCommand() {
+  //impliment
+return "";
+}

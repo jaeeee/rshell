@@ -60,26 +60,26 @@ void Client::parse() {
       //remove the space, truncate command accordingly
       if (command.at(indexOfSpace + 2)  == '|') { //confirm it's two
       //create left side
-        // string c1str = command.substr(0, indexOfSpace);
-        //   cout << "left: " << c1str << endl;
-        //   // command = c1str;
-        //   string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
-        //   cout << "right: " << c2str << endl;
-        //   command = c2str;
-        //   Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
+        string c1str = command.substr(0, indexOfSpace);
+          cout << "left: " << c1str << endl;
+          // command = c1str;
+          string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+          cout << "right: " << c2str << endl;
+          command = c2str;
+          Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
         // }
       }
       //remove the space, truncate command accordingly
     } else if (command.at(indexOfSpace + 1) == ';') {
-      //create left side
-        // string c1str = command.substr(0, indexOfSpace);
-        //   cout << "left: " << c1str << endl;
-        //   // command = c1str;
-        //   string c2str = command.substr(indexOfSpace + 3, command.size() - 1);
-        //   cout << "right: " << c2str << endl;
-        //   command = c2str;
-        //   Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
-      //remove the space, trucnate command accordingly
+      // create left side
+        string c1str = command.substr(0, indexOfSpace);
+          cout << "left: " << c1str << endl;
+          // command = c1str;
+          string c2str = command.substr(indexOfSpace + 3, command.size() - 1);
+          cout << "right: " << c2str << endl;
+          command = c2str;
+          Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
+      // remove the space, trucnate command accordingly
     }
 
     }

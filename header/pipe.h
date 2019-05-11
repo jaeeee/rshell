@@ -18,6 +18,7 @@ public:
   }
 
   bool execute();
+  string getCommand();
   // string getCommand() {return "a"; }
 };
 

@@ -12,3 +12,8 @@ bool Semi_Connector::execute() {
   left->execute();
   return right->execute();
 }
+
+string Semi_Connector::getCommand() {
+  //implmenet this
+  return "";
+}
