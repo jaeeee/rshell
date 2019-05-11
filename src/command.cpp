@@ -12,6 +12,7 @@ class Command;
 class Connector;
 class Base;
 
-bool Command:execute() {
+bool Command::execute() {
   //command execution here
+  return false;
 }

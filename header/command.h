@@ -15,7 +15,7 @@ public:
   Command(string &input) {
     cmd = input;
   }
-  virtual bool execute() { return false;}
+  virtual bool execute();
   string getCommand() {
     return cmd;
   }

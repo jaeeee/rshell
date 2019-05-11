@@ -48,7 +48,7 @@ if (temp.at(1) == '&') {
   // cout << temp << endl;
   Base* cmd2 = new Command(temp);
   Base* addC = new And_Connector(cmd1, cmd2);
-  cout << "2 &&" << endl;
+  cout << "2 && found" << endl;
 }
 // if ()
 break;

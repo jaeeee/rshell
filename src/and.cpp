@@ -9,5 +9,10 @@ class Base;
 class Connector;
 
 bool And_Connector::execute() {
-  return (left->execute()) && (right->execute()); 
+  return (left->execute()) && (right->execute());
+}
+
+string And_Connector::getCommand() {
+  //impliment
+return "";
 }

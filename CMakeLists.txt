@@ -7,6 +7,9 @@ SET(CMAKE_CXX_STANDARD 11)
 ADD_EXECUTABLE(program
     src/main.cpp
     src/client.cpp
+    src/pipe.cpp
+    src/command.cpp
+    src/and.cpp
 )
 
 ADD_EXECUTABLE(test
