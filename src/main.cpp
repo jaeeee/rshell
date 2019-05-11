@@ -50,8 +50,10 @@ int main()
     // else {
     //   wait(NULL);
     //}
-    Client* user = new Client(dummy);
-    user->parse();
+    Base * temp = new Command(dummy);
+    temp->execute();
+    // Client* user = new Client(dummy);
+    // user->parse();
 
     // break;
 }
