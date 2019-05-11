@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -15,53 +16,114 @@ void Client::init() {
   root->execute();
 }
 
-void Client::parse() { //; && ||
-  if (command.find(' ') == -1) {
-    cout << "THIS COMMAND HAS NO SPACES BRO" << endl;
-    /**
-    execute command directly
-    **/
-    return;
+
+void Client::parse() {
+  // ; && ||
+  if (command.find('#') != -1) { //found #
+    //ignore everything after #
+    int indexOfPound = command.find('#');
+    string substringedCommand = command.substr(0, indexOfPound);
+    cout << substringedCommand << endl;
+    Base* cmdPound = new Command(substringedCommand);
   }
-  int begIndcommand = 0;
-  int firstSpcIndx = command.find(' ');
-  string temp = "";
-  for (int i = begIndcommand; i <= firstSpcIndx; i++) {
-    temp = temp + command.at(i);
+  else if (command.find(' ') == -1) { //no spaces found
+    Base* cmd0 = new Command(command);
+    cout << "no spaces, therefore command is: " << command << endl;
+  } else {
+    cout << "o fuhk spaces found, here we go boys" << endl;
+    bool whileCond = true;
+    while (whileCond == true) { //while there are spaces...
+      int indexOfSpace = command.find(' ');
+      if (command.at(indexOfSpace + 1) != '&' &&
+      command.at(indexOfSpace + 1) != '|' &&
+      command.at(indexOfSpace + 1) != ';') {
+      //if none of the connectors are found, truncate the string should be saved, removing the last space
+      Base* commandNoConnectorYet = new Command(command);
+      cout << command << endl;
+      whileCond = false;
+    }
+
+    }
+    // int firstSpcIndx = command.find(' ');
+    // switch (temp.at(firstSpcIndx + 1)) {
+    // case '&':
+    // // cout << "found case &" << endl;
+    // if (temp.at(1) == '&') {
+    //   // cout << "HEHE &&" << endl;
+    //   // cout << "yup that's a &&" << endl;
+    //   string cutTheStringBro = temp.substr(3, command.size());
+    //   temp = cutTheStringBro;
+    //   // cout << temp << endl;
+    //   Base* cmd2 = new Command(temp);
+    //   Base* addC = new And_Connector(cmd1, cmd2);
+    //   // cout << "2 && found" << endl;
+    // }
+    // // if ()
+    // break;
+    // case '|':
+    //
+    //
+    //
+    // break;
+    // default: //cases for non operators
+    //
+    // break;
+    // }
   }
-//let's try splitting the string
-// cout << "bro size: " << command.size() << endl;
-string theCommand = command.substr(firstSpcIndx + 1, command.size() - 1);
-// cout << "temp: " << temp << endl;
-temp = theCommand;
-// cout << "substringed: " << temp << endl;
-  Base * cmd1 = new Command(theCommand);
-// switch(command.at(firstSpcIndx + 1)) {
-switch (temp.at(0)) {
-case '&':
-// cout << "found case &" << endl;
-if (temp.at(1) == '&') {
-  // cout << "HEHE &&" << endl;
-  // cout << "yup that's a &&" << endl;
-  string cutTheStringBro = temp.substr(3, command.size());
-  temp = cutTheStringBro;
-  // cout << temp << endl;
-  Base* cmd2 = new Command(temp);
-  Base* addC = new And_Connector(cmd1, cmd2);
-  cout << "2 && found" << endl;
+
 }
-// if ()
-break;
-case '|':
 
+/**
+OLD PARSE
+**/
+// void Client::parse() { //; && ||
+//   if (command.find(' ') == -1) {
+//     cout << "THIS COMMAND HAS NO SPACES BRO" << endl;
+//     /**
+//     execute command directly
+//     **/
+//     return;
+//   }
+//   int begIndcommand = 0;
+//   int firstSpcIndx = command.find(' ');
+//   string temp = "";
+//   for (int i = begIndcommand; i <= firstSpcIndx; i++) {
+//     temp = temp + command.at(i);
+//   }
+// //let's try splitting the string
+// // cout << "bro size: " << command.size() << endl;
+// string theCommand = command.substr(firstSpcIndx + 1, command.size() - 1);
+// // cout << "temp: " << temp << endl;
+// temp = theCommand;
+// // cout << "substringed: " << temp << endl;
+//   Base * cmd1 = new Command(theCommand);
+// // switch(command.at(firstSpcIndx + 1)) {
+// switch (temp.at(0)) {
+// case '&':
+// // cout << "found case &" << endl;
+// if (temp.at(1) == '&') {
+//   // cout << "HEHE &&" << endl;
+//   // cout << "yup that's a &&" << endl;
+//   string cutTheStringBro = temp.substr(3, command.size());
+//   temp = cutTheStringBro;
+//   // cout << temp << endl;
+//   Base* cmd2 = new Command(temp);
+//   Base* addC = new And_Connector(cmd1, cmd2);
+//   cout << "2 && found" << endl;
+// }
+// // if ()
+// break;
+// case '|':
+//
+//
+//
+// break;
+// default: //cases for non operators
+//
+// break;
+// }
+// }
 
-
-break;
-default: //cases for non operators
-
-break;
-}
-}
 /**
 TODO PARSE
 **/
