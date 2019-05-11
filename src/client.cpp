@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ void Client::init() {
 
 
 void Client::parse() {
+  int ignoreSpaceIndx;
   // ; && ||
   if (command.find('#') != -1) { //found #
     //ignore everything after #
@@ -41,6 +43,22 @@ void Client::parse() {
       Base* commandNoConnectorYet = new Command(command);
       cout << command << endl;
       whileCond = false;
+    } else if (command.at(indexOfSpace + 1) == '&') {
+      //remove the space, truncate command accordingly
+      if (command.at(indexOfSpace + 2)  == '&') { //confirm it's two
+      //create left side
+        string c1str = command.substr(0, indexOfSpace);
+          cout << "left: " << c1str << endl;
+          // command = c1str;
+          string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+          cout << "right: " << c2str << endl;
+          command = c2str;
+          Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
+        }
+    } else if (command.at(indexOfSpace + 1) == '|') {
+      //remove the space, truncate command accordingly
+    } else if (command.at(indexOfSpace + 1) == ';') {
+      //remove the space, trucnate command accordingly
     }
 
     }
