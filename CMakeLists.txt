@@ -10,6 +10,7 @@ ADD_EXECUTABLE(program
     src/pipe.cpp
     src/command.cpp
     src/and.cpp
+    src/semi.cpp
 )
 
 ADD_EXECUTABLE(test

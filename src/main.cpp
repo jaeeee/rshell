@@ -36,9 +36,9 @@ int main()
      string dummy;
      getline(cin, dummy);
     //
-    // if (dummy.lower() == "exit") {
-    //   break;
-    // }
+    if (dummy == "exit") {
+      break;
+    }
 
     // args[0] = (char*)dummy.c_str();
     // args[1] = NULL;
@@ -51,11 +51,12 @@ int main()
     // else {
     //   wait(NULL);
     //}
-    Base * temp = new Command(dummy);
-    cout << dummy << " is executing now" << endl;
-    temp->execute();
-    // Client* user = new Client(dummy);
-    // user->parse();
+    // Base * temp = new Command(dummy);
+    // cout << temp->getCommand() << " is being executed!" << endl;
+    // temp->execute();
+    Client* user = new Client(dummy);
+    user->parse();
+    //user->init();
 
     // break;
 }

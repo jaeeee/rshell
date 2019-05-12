@@ -20,6 +20,19 @@ void Client::init() {
 
 
 void Client::parse() {
+
+  int operatorsCount = 0;
+  Client * parent;
+
+  for (int i = 0; i < command.size(); i++) {
+    if (command.at(i) == ';' ||
+    (command.at(i) == '&' && command.at(i+1) == '&') ||
+    (command.at(i) == '|' && command.at(i+1) == '|')) {
+      operatorsCount++;
+    }
+  }
+
+//cout << "operators count: "<< operatorsCount << endl;
   int ignoreSpaceIndx;
   // ; && ||
   if (command.find('#') != -1) { //found #
@@ -31,6 +44,7 @@ void Client::parse() {
   }
   else if (command.find(' ') == -1) { //no spaces found
     Base* cmd0 = new Command(command);
+    root = cmd0;
     cout << "no spaces, therefore command is: " << command << endl;
   } else {
     cout << "o fuhk spaces found, here we go boys" << endl;
@@ -43,6 +57,7 @@ void Client::parse() {
       //if none of the connectors are found, truncate the string should be saved, removing the last space
       Base* commandNoConnectorYet = new Command(command);
       cout << command << endl;
+      parent = new Client(command);
       whileCond = false;
     } else if (command.at(indexOfSpace + 1) == '&') {
       //remove the space, truncate command accordingly
@@ -54,7 +69,9 @@ void Client::parse() {
           string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
+          parent = new Client(command);
+          //parent = new And_Connector(new Command(c1str), new Command(c2str));
+          //Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
         }
     } else if (command.at(indexOfSpace + 1) == '|') {
       //remove the space, truncate command accordingly
@@ -66,7 +83,9 @@ void Client::parse() {
           string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
+          parent = new Client(command);
+          //parent = new Pipe_Connector(new Command(c1str), new Command(c2str));
+          //Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
         // }
       }
       //remove the space, truncate command accordingly
@@ -78,10 +97,15 @@ void Client::parse() {
           string c2str = command.substr(indexOfSpace + 3, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
+          parent = new Client(command);
+          //parent = new Semi_Connector(new Command(c1str), new Command(c2str));
           //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
       // remove the space, trucnate command accordingly
     }
-
+    // cout << "operatorsCount: "<< operatorsCount << endl;
+    // if (operatorsCount > 1) {
+    //   parent->parse();
+    //   }
     }
     // int firstSpcIndx = command.find(' ');
     // switch (temp.at(firstSpcIndx + 1)) {
