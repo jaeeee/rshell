@@ -1,0 +1,6 @@
+ls -a && ls -l
+echo hi && echo bye
+mkdir money || ls -l; echo fml
+touch create_this.cpp || echo wat
+touch hello.txt && touch world.txt #fu
+mkdir alpha && mkdir beta || echo you_good

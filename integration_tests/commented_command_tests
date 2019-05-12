@@ -1,0 +1,5 @@
+ls -l # && echo hi
+echo bwah; echo yes # useless
+clear && git status #yes
+echo 123#456
+exit
