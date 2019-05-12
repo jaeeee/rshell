@@ -19,6 +19,11 @@ class Connector;
 class Base;
 
 bool Command::execute() {
+  if (cmd == "exit" || cmd == "exit ") {
+    exit(2);
+    // cout << "yup that's exit " << endl;
+    return false;
+  }
   vector<char *> extractedWords;
   char *truncated_string = strtok((char * ) this->cmd.c_str(), " ");
   while (truncated_string != NULL) {
