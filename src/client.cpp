@@ -58,9 +58,33 @@ void Client::parse() {
       if (command.at(indexOfSpace + 1) != '&' &&
       command.at(indexOfSpace + 1) != '|' &&
       command.at(indexOfSpace + 1) != ';') {
-        if (command.find('&') != -1 &&
-        command.find('|') != -1 &&
-        command.find(';') != -1 )
+        if (command.find('&') != -1) {
+        int indxOfAnd = command.find('&');
+        // ls -l && ls -a
+
+        Base* c1 = new Command(command.substr(0, indxOfAnd - 2));
+        Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
+        Base* addCon = new And_Connector(c1, c2);
+        root = addCon;
+        command = c2->getCommand();
+        // ls -l && echo hi && echo bye
+        }
+        if (command.find('|') != -1) {
+        int indxOfPipe = command.find('|');
+        Base* c1 = new Command(command.substr(0, indxOfPipe -2));
+        Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
+        Base* pipeCon = new Pipe_Connector(c1, c2);
+        root = pipeCon;
+        command = c2->getCommand();
+        }
+        if (command.find(';') != -1 ) {
+        int indxOfSemi = command.find(';');
+        Base* c1 = new Command(command.substr(0, indxOfSemi - 1));
+        Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
+        Base* semiCon = new Semi_Connector(c1, c2);
+        root = semiCon;
+        command = c2->getCommand();
+      } else {
       //if none of the connectors are found, truncate the string should be saved, removing the last space
       Base* commandNoConnectorYet = new Command(command);
       //cout << command << endl;
@@ -68,6 +92,7 @@ void Client::parse() {
       root = new Command(command);
       whileCond = false;
     }
+  }
     else if (command.at(indexOfSpace + 1) == '&') {
       //remove the space, truncate command accordingly
       if (command.at(indexOfSpace + 2)  == '&') { //confirm it's two
