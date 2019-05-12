@@ -15,7 +15,7 @@ using namespace std;
 class Base;
 
 void Client::init() {
-  cout << "hi" << endl;
+  // cout << "hi" << endl;
   //cout << "executing: " << root->getCommand() << endl;
   root->execute();
 }
@@ -56,9 +56,23 @@ void Client::parse() {
     bool first = true;
     while (whileCond == true) { //while there are spaces...
       int indexOfSpace = command.find(' ');
+      int numSpacesXD = 0;
+      for (int i = 0; i < command.size(); i++) {
+        if (command.at(i) == ' ') {
+          numSpacesXD++;
+        }
+      }
       if (first == false) {
+        if (numSpacesXD == 0) {
+          cout << "NO MORE SPACES" << endl;
+          root = new Command(command);
+          // this->init();
+          whileCond = false;
+          break;
+        }
+        cout << command << " F U " << numSpacesXD << endl;
         string commandCopy = command.substr(command.find(' '), command.size() - 1);
-        commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
+        // commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
         cout << "CUT IT: " << commandCopy << endl;
         indexOfSpace = commandCopy.find(' ');
         // indexOfSpace = commandCopy.substr(command.find(' '), command.size() - 1);
@@ -97,10 +111,10 @@ void Client::parse() {
         first = false;
       } else {
       //if none of the connectors are found, truncate the string should be saved, removing the last space
-      Base* commandNoConnectorYet = new Command(command);
-      //cout << command << endl;
-      //parent = new Client(command);
-      root = new Command(command);
+      // Base* commandNoConnectorYet = new Command(command);
+      // //cout << command << endl;
+      // //parent = new Client(command);
+      // root = new Command(command);
       whileCond = false;
     }
   }
