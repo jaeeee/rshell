@@ -15,6 +15,11 @@ ADD_EXECUTABLE(program
 
 ADD_EXECUTABLE(test
     unit_tests/unit_test.cpp
+    src/client.cpp
+    src/pipe.cpp
+    src/command.cpp
+    src/and.cpp
+    src/semi.cpp
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
