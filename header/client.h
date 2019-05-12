@@ -30,7 +30,7 @@ public:
     command = commandInput;
   }
 
-  void init();
+  // void init();
 
   void parse();
   //   if (command.at(firstSpcIndx + 1) == ' ')

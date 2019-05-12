@@ -9,49 +9,39 @@
 #include <string>
 #include <cmath>
 #include <algorithm>
-
+#include <stack>
 using namespace std;
 
 class Base;
 
-void Client::init() {
-  // cout << "hi" << endl;
-  //cout << "executing: " << root->getCommand() << endl;
-  root->execute();
-}
+// void Client::init() {
+//   // cout << "hi" << endl;
+//   //cout << "executing: " << root->getCommand() << endl;
+//   root->execute();
+// }
 
 
 void Client::parse() {
-
-  int operatorsCount = 0;
-  Client * parent;
+  // Client * parent;
   string c1str;
   string c2str;
-
-  for (int i = 0; i < command.size(); i++) {
-    if (command.at(i) == ';' ||
-    (command.at(i) == '&' && command.at(i+1) == '&') ||
-    (command.at(i) == '|' && command.at(i+1) == '|')) {
-      operatorsCount++;
-    }
-  }
-
-//cout << "operators count: "<< operatorsCount << endl;
-  int ignoreSpaceIndx;
+  stack<Base*> tree;
   // ; && ||
+  root = new Command("");
   if (command.find('#') != -1) { //found #
     //ignore everything after #
     int indexOfPound = command.find('#');
     string substringedCommand = command.substr(0, indexOfPound);
-    cout << substringedCommand << endl;
+    // cout << substringedCommand << endl;
     Base* cmdPound = new Command(substringedCommand);
   }
   else if (command.find(' ') == -1) { //no spaces found
     Base* cmd0 = new Command(command);
-    root = cmd0;
-    cout << "no spaces, therefore command is: " << command << endl;
+    // root = cmd0;
+    tree.push(cmd0);
+    // cout << "no spaces, therefore command is: " << command << endl;
   } else {
-    cout << "o fuhk spaces found, here we go boys" << endl;
+    // cout << "o fuhk spaces found, here we go boys" << endl;
     bool whileCond = true;
     bool first = true;
     while (whileCond == true) { //while there are spaces...
@@ -64,16 +54,17 @@ void Client::parse() {
       }
       if (first == false) {
         if (numSpacesXD == 0) {
-          cout << "NO MORE SPACES" << endl;
-          root = new Command(command);
+          // cout << "NO MORE SPACES" << endl;
+          // root = new Command(command);
+          tree.push(new Command(command));
           // this->init();
           whileCond = false;
           break;
         }
-        cout << command << " F U " << numSpacesXD << endl;
+        // cout << command << " F U " << numSpacesXD << endl;
         string commandCopy = command.substr(command.find(' '), command.size() - 1);
         // commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
-        cout << "CUT IT: " << commandCopy << endl;
+        // cout << "CUT IT: " << commandCopy << endl;
         indexOfSpace = commandCopy.find(' ');
         // indexOfSpace = commandCopy.substr(command.find(' '), command.size() - 1);
       }
@@ -87,7 +78,8 @@ void Client::parse() {
         Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
         Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
         Base* addCon = new And_Connector(c1, c2);
-        root = addCon;
+        // root = addCon;
+        tree.push(addCon);
         command = c2->getCommand();
         // ls -l && echo hi && echo bye
         first = false;
@@ -97,16 +89,19 @@ void Client::parse() {
         Base* c1 = new Command(command.substr(0, indxOfPipe -1));
         Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
         Base* pipeCon = new Pipe_Connector(c1, c2);
-        root = pipeCon;
+        // root = pipeCon;
+          tree.push(pipeCon);
         command = c2->getCommand();
         first = false;
         }
         if (command.find(';') != -1 ) {
         int indxOfSemi = command.find(';');
         Base* c1 = new Command(command.substr(0, indxOfSemi));
+        // cout << (command.substr(0, indxOfSemi)) << endl;
         Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
         Base* semiCon = new Semi_Connector(c1, c2);
-        root = semiCon;
+        // root = semiCon;
+          tree.push(semiCon);
         command = c2->getCommand();
         first = false;
       } else {
@@ -114,95 +109,109 @@ void Client::parse() {
       // Base* commandNoConnectorYet = new Command(command);
       // //cout << command << endl;
       // //parent = new Client(command);
-      // root = new Command(command);
+      Base* elseC = new Command(command);
+      tree.push(elseC);
+      // this->init();
+      // cout << "WYD BRO: " << command << endl;
       whileCond = false;
     }
   }
-    else if (command.at(indexOfSpace + 1) == '&') {
-      //remove the space, truncate command accordingly
-      if (command.at(indexOfSpace + 2)  == '&') { //confirm it's two
-      //create left side
-          c1str = command.substr(0, indexOfSpace);
-          cout << "left: " << c1str << endl;
-          // command = c1str;
-          c2str = command.substr(indexOfSpace + 4, command.size() - 1);
-          cout << "right: " << c2str << endl;
-          command = c2str;
-          //parent = new Client(command);
-          root = new And_Connector(new Command(c1str), new Command (c2str));
-          //parent = new And_Connector(new Command(c1str), new Command(c2str));
-          //Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
-          first = false;
-        }
-    } else if (command.at(indexOfSpace + 1) == '|') {
-      //remove the space, truncate command accordingly
-      if (command.at(indexOfSpace + 2)  == '|') { //confirm it's two
-      //create left side
-        c1str = command.substr(0, indexOfSpace);
-          cout << "left: " << c1str << endl;
-          // command = c1str;
-          c2str = command.substr(indexOfSpace + 4, command.size() - 1);
-          cout << "right: " << c2str << endl;
-          command = c2str;
-          root = new Pipe_Connector(new Command(c1str), new Command (c2str));
-
-          //parent = new Client(command);
-          //parent = new Pipe_Connector(new Command(c1str), new Command(c2str));
-          //Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
-        // }
-        first = false;
-      }
-      //remove the space, truncate command accordingly
-    } else if (command.at(indexOfSpace + 1) == ';') {
-      // create left side
-        c1str = command.substr(0, indexOfSpace);
-          cout << "left: " << c1str << endl;
-          // command = c1str;
-          c2str = command.substr(indexOfSpace + 3, command.size() - 1);
-          cout << "right: " << c2str << endl;
-          command = c2str;
-          root = new Semi_Connector(new Command(c1str), new Command (c2str));
-          first = false;
-          //parent = new Client(command);
-          //parent = new Semi_Connector(new Command(c1str), new Command(c2str));
-          //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
-      // remove the space, trucnate command accordingly
-    }
-    // else {
-    //   root = new Command(command);
-    // }
-    // cout << "operatorsCount: "<< operatorsCount << endl;
-    // if (operatorsCount > 1) {
-    //   parent->parse();
-    //   }
-    }
-    // int firstSpcIndx = command.find(' ');
-    // switch (temp.at(firstSpcIndx + 1)) {
-    // case '&':
-    // // cout << "found case &" << endl;
-    // if (temp.at(1) == '&') {
-    //   // cout << "HEHE &&" << endl;
-    //   // cout << "yup that's a &&" << endl;
-    //   string cutTheStringBro = temp.substr(3, command.size());
-    //   temp = cutTheStringBro;
-    //   // cout << temp << endl;
-    //   Base* cmd2 = new Command(temp);
-    //   Base* addC = new And_Connector(cmd1, cmd2);
-    //   // cout << "2 && found" << endl;
-    // }
-    // // if ()
-    // break;
-    // case '|':
-    //
-    //
-    //
-    // break;
-    // default: //cases for non operators
-    //
-    // break;
-    // }
-  }
 }
+}
+    while (!tree.empty()) {
+      // cout << "THE TREE ISNT EMPTY" << endl;
+      root = tree.top();
+      tree.pop();
+    }
+    root->execute();
+}
+
+/**
+Old conditions
+**/
+// else if (command.at(indexOfSpace + 1) == '&') {
+//   //remove the space, truncate command accordingly
+//   if (command.at(indexOfSpace + 2)  == '&') { //confirm it's two
+//   //create left side
+//       c1str = command.substr(0, indexOfSpace);
+//       cout << "left: " << c1str << endl;
+//       // command = c1str;
+//       c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+//       cout << "right: " << c2str << endl;
+//       command = c2str;
+//       //parent = new Client(command);
+//       root = new And_Connector(new Command(c1str), new Command (c2str));
+//       //parent = new And_Connector(new Command(c1str), new Command(c2str));
+//       //Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
+//       first = false;
+//     }
+// } else if (command.at(indexOfSpace + 1) == '|') {
+//   //remove the space, truncate command accordingly
+//   if (command.at(indexOfSpace + 2)  == '|') { //confirm it's two
+//   //create left side
+//     c1str = command.substr(0, indexOfSpace);
+//       cout << "left: " << c1str << endl;
+//       // command = c1str;
+//       c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+//       cout << "right: " << c2str << endl;
+//       command = c2str;
+//       root = new Pipe_Connector(new Command(c1str), new Command (c2str));
+//
+//       //parent = new Client(command);
+//       //parent = new Pipe_Connector(new Command(c1str), new Command(c2str));
+//       //Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
+//     // }
+//     first = false;
+//   }
+//   //remove the space, truncate command accordingly
+// } else if (command.at(indexOfSpace + 1) == ';') {
+//   // create left side
+//     c1str = command.substr(0, indexOfSpace);
+//       cout << "left: " << c1str << endl;
+//       // command = c1str;
+//       c2str = command.substr(indexOfSpace + 3, command.size() - 1);
+//       cout << "right: " << c2str << endl;
+//       command = c2str;
+//       root = new Semi_Connector(new Command(c1str), new Command (c2str));
+//       first = false;
+//       //parent = new Client(command);
+//       //parent = new Semi_Connector(new Command(c1str), new Command(c2str));
+//       //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
+//   // remove the space, trucnate command accordingly
+// }
+// else {
+//   root = new Command(command);
+// }
+// cout << "operatorsCount: "<< operatorsCount << endl;
+// if (operatorsCount > 1) {
+//   parent->parse();
+//   }
+// }
+// int firstSpcIndx = command.find(' ');
+// switch (temp.at(firstSpcIndx + 1)) {
+// case '&':
+// // cout << "found case &" << endl;
+// if (temp.at(1) == '&') {
+//   // cout << "HEHE &&" << endl;
+//   // cout << "yup that's a &&" << endl;
+//   string cutTheStringBro = temp.substr(3, command.size());
+//   temp = cutTheStringBro;
+//   // cout << temp << endl;
+//   Base* cmd2 = new Command(temp);
+//   Base* addC = new And_Connector(cmd1, cmd2);
+//   // cout << "2 && found" << endl;
+// }
+// // if ()
+// break;
+// case '|':
+//
+//
+//
+// break;
+// default: //cases for non operators
+//
+// break;
+// }
 
 /**
 OLD PARSE

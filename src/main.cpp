@@ -60,7 +60,7 @@ int main()
     // temp->execute();
     Client* user = new Client(dummy);
     user->parse();
-    user->init();
+    // user->init();
 
     // Base * parent = new Pipe_Connector(new Command("a"), new Command ("ls"));
     // Base * parent1 = new Pipe_Connector(new Command("echo hi"), parent);
