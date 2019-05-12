@@ -1,4 +1,4 @@
 #!/bin/bash
 # COMMENTED COMMAND TESTS START #
 
-../program < commented_command_tests
+../rshell < commented_command_tests
