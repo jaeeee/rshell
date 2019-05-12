@@ -22,6 +22,10 @@ public:
     root = 0;
   }
 
+  Client(Base * root) {
+    this->root = root;
+  }
+
   Client(string& commandInput) {
     command = commandInput;
   }

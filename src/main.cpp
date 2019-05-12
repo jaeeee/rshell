@@ -7,6 +7,10 @@
 #include <stdio.h>
 
 #include "../header/client.h"
+#include "../header/connector.h"
+#include "../header/and.h"
+#include "../header/pipe.h"
+#include "../header/semi.h"
 
 using namespace std;
 
@@ -56,7 +60,14 @@ int main()
     // temp->execute();
     Client* user = new Client(dummy);
     user->parse();
-    //user->init();
+    user->init();
+
+    // Base * parent = new Pipe_Connector(new Command("a"), new Command ("ls"));
+    // Base * parent1 = new Pipe_Connector(new Command("echo hi"), parent);
+    // Base * parent2 = new And_Connector(new Command("ls"), parent1);
+    //
+    // cout << parent2->getCommand() << endl;
+    // parent2->execute();
 
     // break;
 }

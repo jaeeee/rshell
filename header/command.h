@@ -12,7 +12,7 @@ protected:
   string cmd;
 public:
   Command() { }
-  Command(string &input) {
+  Command(string input) {
     cmd = input;
   }
   virtual bool execute();

@@ -15,6 +15,8 @@ using namespace std;
 class Base;
 
 void Client::init() {
+  cout << "hi" << endl;
+  //cout << "executing: " << root->getCommand() << endl;
   root->execute();
 }
 
@@ -23,6 +25,8 @@ void Client::parse() {
 
   int operatorsCount = 0;
   Client * parent;
+  string c1str;
+  string c2str;
 
   for (int i = 0; i < command.size(); i++) {
     if (command.at(i) == ';' ||
@@ -56,20 +60,23 @@ void Client::parse() {
       command.at(indexOfSpace + 1) != ';') {
       //if none of the connectors are found, truncate the string should be saved, removing the last space
       Base* commandNoConnectorYet = new Command(command);
-      cout << command << endl;
-      parent = new Client(command);
+      //cout << command << endl;
+      //parent = new Client(command);
+      //root = new Command(command);
       whileCond = false;
-    } else if (command.at(indexOfSpace + 1) == '&') {
+    }
+    else if (command.at(indexOfSpace + 1) == '&') {
       //remove the space, truncate command accordingly
       if (command.at(indexOfSpace + 2)  == '&') { //confirm it's two
       //create left side
-        string c1str = command.substr(0, indexOfSpace);
+          c1str = command.substr(0, indexOfSpace);
           cout << "left: " << c1str << endl;
           // command = c1str;
-          string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+          c2str = command.substr(indexOfSpace + 4, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          parent = new Client(command);
+          //parent = new Client(command);
+          root = new And_Connector(new Command(c1str), new Command (c2str));
           //parent = new And_Connector(new Command(c1str), new Command(c2str));
           //Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
         }
@@ -77,13 +84,15 @@ void Client::parse() {
       //remove the space, truncate command accordingly
       if (command.at(indexOfSpace + 2)  == '|') { //confirm it's two
       //create left side
-        string c1str = command.substr(0, indexOfSpace);
+        c1str = command.substr(0, indexOfSpace);
           cout << "left: " << c1str << endl;
           // command = c1str;
-          string c2str = command.substr(indexOfSpace + 4, command.size() - 1);
+          c2str = command.substr(indexOfSpace + 4, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          parent = new Client(command);
+          root = new Pipe_Connector(new Command(c1str), new Command (c2str));
+
+          //parent = new Client(command);
           //parent = new Pipe_Connector(new Command(c1str), new Command(c2str));
           //Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
         // }
@@ -91,13 +100,14 @@ void Client::parse() {
       //remove the space, truncate command accordingly
     } else if (command.at(indexOfSpace + 1) == ';') {
       // create left side
-        string c1str = command.substr(0, indexOfSpace);
+        c1str = command.substr(0, indexOfSpace);
           cout << "left: " << c1str << endl;
           // command = c1str;
-          string c2str = command.substr(indexOfSpace + 3, command.size() - 1);
+          c2str = command.substr(indexOfSpace + 3, command.size() - 1);
           cout << "right: " << c2str << endl;
           command = c2str;
-          parent = new Client(command);
+          root = new Semi_Connector(new Command(c1str), new Command (c2str));
+          //parent = new Client(command);
           //parent = new Semi_Connector(new Command(c1str), new Command(c2str));
           //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
       // remove the space, trucnate command accordingly

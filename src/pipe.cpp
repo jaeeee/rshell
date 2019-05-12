@@ -9,10 +9,13 @@ class Base;
 class Connector;
 
 bool Pipe_Connector::execute() {
-  if(left->execute()) {
-    return false;
+  if(left->execute()) { //if left executed without errors
+    return true;
   }
-  return right->execute();
+  if (right->execute()) { // if left executed with an error execute right
+    return true;
+  }
+  return false;
 }
 
 string Pipe_Connector::getCommand() {
