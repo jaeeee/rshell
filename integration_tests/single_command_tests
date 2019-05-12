@@ -1,0 +1,11 @@
+ls
+echo yes
+mkdir blah
+git status
+echo "hi" # && bye
+git status;
+ls -a
+touch swag.cpp # ls
+ls
+rm swag.cpp
+ls-l
