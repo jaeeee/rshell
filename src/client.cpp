@@ -58,11 +58,14 @@ void Client::parse() {
       if (command.at(indexOfSpace + 1) != '&' &&
       command.at(indexOfSpace + 1) != '|' &&
       command.at(indexOfSpace + 1) != ';') {
+        if (command.find('&') != -1 &&
+        command.find('|') != -1 &&
+        command.find(';') != -1 )
       //if none of the connectors are found, truncate the string should be saved, removing the last space
       Base* commandNoConnectorYet = new Command(command);
       //cout << command << endl;
       //parent = new Client(command);
-      //root = new Command(command);
+      root = new Command(command);
       whileCond = false;
     }
     else if (command.at(indexOfSpace + 1) == '&') {
@@ -112,6 +115,9 @@ void Client::parse() {
           //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
       // remove the space, trucnate command accordingly
     }
+    // else {
+    //   root = new Command(command);
+    // }
     // cout << "operatorsCount: "<< operatorsCount << endl;
     // if (operatorsCount > 1) {
     //   parent->parse();
@@ -143,7 +149,6 @@ void Client::parse() {
     // break;
     // }
   }
-
 }
 
 /**
