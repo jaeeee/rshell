@@ -53,8 +53,16 @@ void Client::parse() {
   } else {
     cout << "o fuhk spaces found, here we go boys" << endl;
     bool whileCond = true;
+    bool first = true;
     while (whileCond == true) { //while there are spaces...
       int indexOfSpace = command.find(' ');
+      if (first == false) {
+        string commandCopy = command.substr(command.find(' '), command.size() - 1);
+        commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
+        cout << "CUT IT: " << commandCopy << endl;
+        indexOfSpace = commandCopy.find(' ');
+        // indexOfSpace = commandCopy.substr(command.find(' '), command.size() - 1);
+      }
       if (command.at(indexOfSpace + 1) != '&' &&
       command.at(indexOfSpace + 1) != '|' &&
       command.at(indexOfSpace + 1) != ';') {
@@ -68,6 +76,7 @@ void Client::parse() {
         root = addCon;
         command = c2->getCommand();
         // ls -l && echo hi && echo bye
+        first = false;
         }
         if (command.find('|') != -1) {
         int indxOfPipe = command.find('|');
@@ -76,6 +85,7 @@ void Client::parse() {
         Base* pipeCon = new Pipe_Connector(c1, c2);
         root = pipeCon;
         command = c2->getCommand();
+        first = false;
         }
         if (command.find(';') != -1 ) {
         int indxOfSemi = command.find(';');
@@ -84,6 +94,7 @@ void Client::parse() {
         Base* semiCon = new Semi_Connector(c1, c2);
         root = semiCon;
         command = c2->getCommand();
+        first = false;
       } else {
       //if none of the connectors are found, truncate the string should be saved, removing the last space
       Base* commandNoConnectorYet = new Command(command);
@@ -107,6 +118,7 @@ void Client::parse() {
           root = new And_Connector(new Command(c1str), new Command (c2str));
           //parent = new And_Connector(new Command(c1str), new Command(c2str));
           //Base* andC = new And_Connector(new Command(c1str), new Command(c2str));
+          first = false;
         }
     } else if (command.at(indexOfSpace + 1) == '|') {
       //remove the space, truncate command accordingly
@@ -124,6 +136,7 @@ void Client::parse() {
           //parent = new Pipe_Connector(new Command(c1str), new Command(c2str));
           //Base* pipeC = new Pipe_Connector(new Command(c1str), new Command(c2str));
         // }
+        first = false;
       }
       //remove the space, truncate command accordingly
     } else if (command.at(indexOfSpace + 1) == ';') {
@@ -135,6 +148,7 @@ void Client::parse() {
           cout << "right: " << c2str << endl;
           command = c2str;
           root = new Semi_Connector(new Command(c1str), new Command (c2str));
+          first = false;
           //parent = new Client(command);
           //parent = new Semi_Connector(new Command(c1str), new Command(c2str));
           //Base* semiC = new Semi_Connector(new Command(c1str), new Command(c2str));
