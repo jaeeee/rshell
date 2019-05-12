@@ -5,7 +5,8 @@ git status
 echo "hi" # && bye
 git status;
 ls -a
-touch swag.cpp # ls
+touch swag.cpp
 ls
 rm swag.cpp
 ls-l
+exit
