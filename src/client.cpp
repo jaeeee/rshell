@@ -34,6 +34,7 @@ void Client::parse() {
     string substringedCommand = command.substr(0, indexOfPound);
     // cout << substringedCommand << endl;
     Base* cmdPound = new Command(substringedCommand);
+    tree.push(cmdPound);
   }
   else if (command.find(' ') == -1) { //no spaces found
     Base* cmd0 = new Command(command);
@@ -120,6 +121,7 @@ void Client::parse() {
 }
     while (!tree.empty()) {
       // cout << "THE TREE ISNT EMPTY" << endl;
+      cout << "command: [" << tree.top()->getCommand() << "]" << endl;
       root = tree.top();
       tree.pop();
     }
