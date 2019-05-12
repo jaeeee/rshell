@@ -69,7 +69,7 @@ void Client::parse() {
         if (command.find('&') != -1) {
         int indxOfAnd = command.find('&');
         // ls -l && ls -a
-
+        // HALP
         Base* c1 = new Command(command.substr(0, indxOfAnd - 2));
         Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
         Base* addCon = new And_Connector(c1, c2);
