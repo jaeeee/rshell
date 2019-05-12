@@ -3,10 +3,6 @@ echo yes
 mkdir blah
 git status
 echo "hi" # && bye
-git status;
+rm -f blah
 ls -a
-touch swag.cpp
-ls
-rm swag.cpp
-ls-l
 exit
