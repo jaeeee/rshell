@@ -84,7 +84,7 @@ void Client::parse() {
         int indxOfAnd = command.find('&');
         // ls -l && ls -a
         // HALP
-        Base* c1 = new Command(command.substr(0, indxOfAnd - 2));
+        Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
         Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
         Base* addCon = new And_Connector(c1, c2);
         root = addCon;
@@ -94,7 +94,7 @@ void Client::parse() {
         }
         if (command.find('|') != -1) {
         int indxOfPipe = command.find('|');
-        Base* c1 = new Command(command.substr(0, indxOfPipe -2));
+        Base* c1 = new Command(command.substr(0, indxOfPipe -1));
         Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
         Base* pipeCon = new Pipe_Connector(c1, c2);
         root = pipeCon;
@@ -103,7 +103,7 @@ void Client::parse() {
         }
         if (command.find(';') != -1 ) {
         int indxOfSemi = command.find(';');
-        Base* c1 = new Command(command.substr(0, indxOfSemi - 1));
+        Base* c1 = new Command(command.substr(0, indxOfSemi));
         Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
         Base* semiCon = new Semi_Connector(c1, c2);
         root = semiCon;
