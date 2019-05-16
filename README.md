@@ -9,31 +9,21 @@ Our program will be a basic command shell that will be created using C++. The sh
 ## Classes
 
 ### client.cpp
-* `printMenu()` - Provides the interface in which the user can use the console/shell. Takes user input.
+* `parse()` - Provides the interface in which the user can use the console/shell. Takes user input.
+* `init()` - Initializes the command from the "root"
 
 ### base.cpp
 Base class, holds virtual functions.
 
 * `Base* left, right`
-
-* `execute()` - Detect type of command based on string input. Runs the command.
-
-* `print()` - Prints a new line, and $
-
 * `parse()` - parses / splits strings for certain args
 
 * `connector()` - connects strings if parsed
 
-### input.cpp
+### command.cpp
 Process command function, takes in parameter string
 
 * `execute()`
-
-* `print()`
-
-* `parse()`
-
-* `connector()`
 
 ### and.cpp
 Also known as “&&” next command executed only if the first command succeeds.
@@ -42,37 +32,27 @@ Also known as “&&” next command executed only if the first command succeeds.
 
 * `execute()`
 
-* `print()`
+* `getCommand()`
 
-* `parse()`
 
-* `connector()`
-
-### or.cpp
+### pipe.cpp
 Also known as “||” next command executed only if the first command fails.
 
 * `Base* left, right`
 
 * `execute()`
 
-* `print()`
+* `getCommand()`
 
-* `parse()`
 
-* `connector()`
-
-### semicolon.cpp
+### semi.cpp
 Also known as “;” next command is always executed.
 
 * `Base* left, right`
 
 * `execute()`
 
-* `print()`
-
-* `parse()`
-
-* `connector()`
+* `getCommand()`
 
 
 #
