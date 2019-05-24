@@ -4,9 +4,11 @@
 #include <sstream>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <string>
 #include <cstring>
 
@@ -19,6 +21,43 @@ class Client;
 class Command;
 class Connector;
 class Base;
+
+bool TestCommand::execute() {
+  // struct stat
+  cout << "WE ARE EXECUTING A TEST COMMAND" << endl;
+  string c2, nFile;
+  size_t index_e = cmd.find("-e");
+  size_t index_f = cmd.find("-f");
+  size_t index_d = cmd.find("-d");
+  size_t index_test_str = cmd.find("test");
+  size_t index_dash = cmd.find("-");
+  struct stat stat_f_comparator;
+
+  if (index_dash != -1) {
+    if (index_e == -1 && index_f == -1 && index_d == -1) {
+      cout << "(False)" << endl;
+      cout << "invalid input! no parameter specified" << endl;
+      return false;
+    }
+    // if (command.at(index_dash ))
+  }
+
+  if (index_e == -1 && index_f == -1 && index_d == -1) { //none found
+    //so use the "-e" by default
+    c2 = cmd.substr(0, cmd.size() - 2);
+    stringstream ss(c2);
+    ss >> nFile;
+    c2 = nFile;
+    if (stat(c2.c_str(), &stat_f_comparator) == 0) {
+      cout << "(True)" << endl;
+      return true;
+    } else {
+      cout << "(False)" << endl;
+      return false;
+    }
+  }
+  return true;
+}
 
 bool Command::execute() {
   if (cmd == "exit" || cmd == "exit ") {

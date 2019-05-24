@@ -27,7 +27,11 @@ void Client::parse() {
   string c2str;
   stack<Base*> tree;
   // ; && ||
-  root = new Command("");
+  // root = new Command("");
+  if (command.at(0) == '[' || command.substr(0,4) == "test") {
+    root = new TestCommand(command);
+    cout << "bound TestCommand" << endl;
+  }
   if (command.find('#') != -1) { //found #
     //ignore everything after #
     int indexOfPound = command.find('#');

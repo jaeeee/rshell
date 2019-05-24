@@ -21,5 +21,19 @@ public:
   }
 };
 
+class TestCommand : public Command {
+// protected:
+  // string cmd;
+public:
+  TestCommand() { }
+  TestCommand(string input) {
+    cmd = input;
+  }
+  virtual bool execute();
+  // string getCommand() {
+    // return cmd;
+  // }
+};
+
 
 #endif
