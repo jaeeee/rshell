@@ -28,10 +28,6 @@ void Client::parse() {
   stack<Base*> tree;
   // ; && ||
   // root = new Command("");
-  if (command.at(0) == '[' || command.substr(0,4) == "test") {
-    root = new TestCommand(command);
-    cout << "bound TestCommand" << endl;
-  }
   if (command.find('#') != -1) { //found #
     //ignore everything after #
     int indexOfPound = command.find('#');
@@ -39,6 +35,10 @@ void Client::parse() {
     // cout << substringedCommand << endl;
     Base* cmdPound = new Command(substringedCommand);
     tree.push(cmdPound);
+  }
+  if (command.at(0) == '[' || command.substr(0,4) == "test") {
+    root = new TestCommand(command);
+    // cout << "bound TestCommand" << endl;
   }
   else if (command.find(' ') == -1) { //no spaces found
     Base* cmd0 = new Command(command);
