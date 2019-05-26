@@ -1,0 +1,12 @@
+touch hellomyfriend
+test -e hellomyfriend
+test -d hellomyfriend
+test -f hellomyfriend
+mkdir directoryversion
+test -d directoryversion
+test -e directoryversion
+test -f directoryversion
+test hellomyfriend
+rm -f hellomyfriend
+rm -r directoryversion
+exit

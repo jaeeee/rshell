@@ -113,6 +113,85 @@ TEST(TestName, CombinationTest2) {
   EXPECT_EQ(test3->getCommand(), "ls -l && ls && ls -a");
 }
 
+TEST(TestCommand, EXIST) {
+  string cmd1 = "touch wat";
+  string cmd2 = "test -e wat";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new TestCommand(cmd2);
+  test1->execute();
+  EXPECT_TRUE(test2->execute());
+  Base *test3 = new Command("rm -f wat");
+  test3->execute();
+}
+
+TEST(TestCommand, EXIST_DIRECTORY) {
+  string cmd1 = "touch fileName";
+  string cmd2 = "test -d fileName";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new TestCommand(cmd2);
+  test1->execute();
+  EXPECT_FALSE(test2->execute());
+  Base *test3 = new Command("rm -f fileName");
+  test3->execute();
+}
+
+TEST(TestCommand, EXIST_YES) {
+  string cmd1 = "touch fileName";
+  string cmd2 = "[fileName]";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new TestCommand(cmd2);
+  test1->execute();
+  EXPECT_TRUE(test2->execute());
+  Base *test3 = new Command("rm -f fileName");
+  test3->execute();
+}
+
+TEST(TestCommand, EXIST_E_WITH_BRACKET) {
+  string cmd1 = "touch fileName";
+  string cmd2 = "[ -e fileName ]";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new TestCommand(cmd2);
+  test1->execute();
+  EXPECT_TRUE(test2->execute());
+  Base *test3 = new Command("rm -f fileName");
+  test3->execute();
+}
+
+TEST(TestCommand, DIRECTORY_TEST) {
+  string cmd1 = "mkdir direc";
+  string cmd2 = "[ -d direc ]";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new Command(cmd2);
+  test1->execute();
+  EXPECT_TRUE(test2->execute());
+  Base *test3 = new Command("rm -r direc");
+  test3->execute();
+}
+
+TEST(TestCommand, TEST_COMB_TEST) {
+  string cmd1 = "mkdir hammer";
+  string cmd2 = "[ hammer ]";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new TestCommand(cmd2);
+  Base *test3 = new Command("touch haha");
+  test3->execute();
+  Base *test4 = new Command("[ haha ]");
+  Base *test5 = new TestCommand("test -e wtf");
+  Base *test6 = new TestCommand("[ -f hammer ]");
+  Base *test7 = new TestCommand("[ -d haha ]");
+  EXPECT_TRUE(test4->execute());
+  EXPECT_FALSE(test5->execute());
+  EXPECT_FALSE(test6->execute());
+  EXPECT_FALSE(test7->execute());
+  test1->execute();
+  EXPECT_TRUE(test2->execute());
+  Base *rm3 = new Command("rm -r hammer");
+  Base *rm4 = new Command("rm -f haha");
+  rm3->execute();
+  rm4->execute();
+}
+
+
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

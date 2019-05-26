@@ -1,0 +1,15 @@
+touch yolo
+mkdir REEVERSIDE
+[ yolo ]
+[ wat ]
+[ -e wut ]
+[ -f yolo ]
+[ -d yolo ]
+[ -e yolo ]
+[ REEVERSIDE ]
+[ -f REEVERSIDE ]
+[ -d REEVERSIDE ]
+[ -e REEVERSIDE ]
+rm -f yolo
+rm -d REEVERSIDE
+exit

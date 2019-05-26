@@ -110,7 +110,7 @@ bool TestCommand::execute() {
     stringstream ss(c2);
     ss >> tempString;
     c2 = tempString;
-    cout << "IF: (" << c2 << ")" << endl;
+    // cout << "IF: (" << c2 << ")" << endl;
   } else {
     c2 = cmd.substr(5);
     cout << c2 << endl;
@@ -168,7 +168,7 @@ bool TestCommand::execute() {
         cout << "(True)" << endl;
         return true;
       } else {
-        cout << ("False") << endl;
+        cout << "(False)" << endl;
         return false;
       }
     // }
