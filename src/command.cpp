@@ -22,6 +22,67 @@ class Command;
 class Connector;
 class Base;
 
+bool Command::execute() {
+  if (cmd == "exit" || cmd == "exit ") {
+    exit(2);
+    // cout << "yup that's exit " << endl;
+    return false;
+  }
+  vector<char *> extractedWords;
+  char *truncated_string = strtok((char * ) this->cmd.c_str(), " ");
+  while (truncated_string != NULL) {
+    extractedWords.push_back(truncated_string);
+    truncated_string = strtok(NULL, " "); //find next token
+  }
+  char **args = new char *[extractedWords.size() + 1]; //instantiate the args array
+  for (int i = 0; i < extractedWords.size(); i++) {
+    args[i] = extractedWords[i];
+  }
+  args[extractedWords.size()] = NULL;
+//   int count = 0;
+//
+//   for (int i = 0; i < cmd.size(); i++) {
+//     if (cmd.at(i) == ' ') {
+//       count++;
+//     }
+//   }
+//
+// char* args[2 + count];
+//
+// args[0] = (char*)cmd.c_str();
+// cout << args[0] << endl;
+// args[1 + count] = NULL;
+// cout << "found " << count << "spaces" << endl;
+// while (count > 0) {
+//   args[count] = (char*)cmd.substr(0, cmd.find(' ')).c_str();
+//     cmd = cmd.substr(cmd.find(' ') + 1, cmd.size());
+// }
+// for (int i = 0; i < count; i++) {
+//   cout << "arg[" << i << "]: " << args[i] << endl;
+// }
+// cout << "REEEEEE" << endl;
+  // char* args[2 + count];
+
+  // args[0] = (char*)cmd.c_str();
+  // for (int j = 1; j < count + 1; j++) {
+  //   args[j] = (char*)cmd.substr(0, cmd.find(' ')).c_str();
+  //   cmd = cmd.substr(cmd.find(' ') + 1, cmd.size());
+  // }
+  // args[1 + count] = NULL;
+
+  if (fork() == 0) { //wait for child
+    if (execvp (args[0],args) == -1) {
+      perror("exec");
+      return false;
+    }
+  }
+  else {
+    wait(NULL);
+  }
+  return true;
+}
+
+
 bool TestCommand::execute() {
   // struct stat
   // cout << "EXECUTING [" << cmd << "]" << endl;
@@ -36,7 +97,7 @@ bool TestCommand::execute() {
   if (index_dash != -1) {
     if (index_e == -1 && index_f == -1 && index_d == -1) {
       cout << "(False)" << endl;
-      cout << "invalid input! no parameter specified" << endl;
+      // cout << "invalid input! no parameter specified" << endl;
       return false;
     }
     // if (command.at(index_dash ))
@@ -73,7 +134,7 @@ bool TestCommand::execute() {
       stringstream ss(c2);
       ss >> tempString;
       c2 = tempString;
-      cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
+      // cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_e + 3);
@@ -150,68 +211,5 @@ bool TestCommand::execute() {
       return false;
     }
   }
-
-
-
   return false;
-}
-
-bool Command::execute() {
-  if (cmd == "exit" || cmd == "exit ") {
-    exit(2);
-    // cout << "yup that's exit " << endl;
-    return false;
-  }
-  vector<char *> extractedWords;
-  char *truncated_string = strtok((char * ) this->cmd.c_str(), " ");
-  while (truncated_string != NULL) {
-    extractedWords.push_back(truncated_string);
-    truncated_string = strtok(NULL, " "); //find next token
-  }
-  char **args = new char *[extractedWords.size() + 1]; //instantiate the args array
-  for (int i = 0; i < extractedWords.size(); i++) {
-    args[i] = extractedWords[i];
-  }
-  args[extractedWords.size()] = NULL;
-//   int count = 0;
-//
-//   for (int i = 0; i < cmd.size(); i++) {
-//     if (cmd.at(i) == ' ') {
-//       count++;
-//     }
-//   }
-//
-// char* args[2 + count];
-//
-// args[0] = (char*)cmd.c_str();
-// cout << args[0] << endl;
-// args[1 + count] = NULL;
-// cout << "found " << count << "spaces" << endl;
-// while (count > 0) {
-//   args[count] = (char*)cmd.substr(0, cmd.find(' ')).c_str();
-//     cmd = cmd.substr(cmd.find(' ') + 1, cmd.size());
-// }
-// for (int i = 0; i < count; i++) {
-//   cout << "arg[" << i << "]: " << args[i] << endl;
-// }
-// cout << "REEEEEE" << endl;
-  // char* args[2 + count];
-
-  // args[0] = (char*)cmd.c_str();
-  // for (int j = 1; j < count + 1; j++) {
-  //   args[j] = (char*)cmd.substr(0, cmd.find(' ')).c_str();
-  //   cmd = cmd.substr(cmd.find(' ') + 1, cmd.size());
-  // }
-  // args[1 + count] = NULL;
-
-  if (fork() == 0) { //wait for child
-    if (execvp (args[0],args) == -1) {
-      perror("exec");
-      return false;
-    }
-  }
-  else {
-    wait(NULL);
-  }
-  return true;
 }
