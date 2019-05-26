@@ -53,10 +53,10 @@ if (distance == 1) {
   // cout << "COMMAND SET: " << cmd;
 
 }
-  if (index_dash != -1) {
+  if (index_dash != -1) { //WHEN THERE IS NO INPUT / PARAMETER SPECIFIED
     if (index_e == -1 && index_f == -1 && index_d == -1) {
       cout << "(False)" << endl;
-      cout << "invalid input! no parameter specified" << endl;
+      // cout << "invalid input! no parameter specified" << endl;
       return false;
     }
     // if (command.at(index_dash ))
@@ -93,7 +93,7 @@ if (distance == 1) {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_e + 3, cmd.size() - 2);
-      cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
+      // cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_e + 3);
@@ -119,7 +119,7 @@ if (distance == 1) {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_f + 3, cmd.size() - 2);
-      cout << "FOUND BRACKETS AND -f NOW: (" <<  c2 << ")" << endl;
+      // cout << "FOUND BRACKETS AND -f NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_f + 3);
@@ -153,7 +153,7 @@ if (distance == 1) {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_d + 3, cmd.size() - 2);
-      cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
+      // cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_d + 3);

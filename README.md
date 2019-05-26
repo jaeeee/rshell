@@ -21,9 +21,10 @@ Base class, holds virtual functions.
 * `connector()` - connects strings if parsed
 
 ### command.cpp
-Process command function, takes in parameter string
+Process command function, takes in parameter string.
 
 * `execute()`
+* We also added a TestCommand executor that is tailored specifically for the test command.
 
 ### and.cpp
 Also known as “&&” next command executed only if the first command succeeds.
