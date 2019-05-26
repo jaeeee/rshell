@@ -1,6 +1,5 @@
 # CS100 RShell
 > Spring 2019 - Daniel Kwong (862032167) and Jason Chang (862046747)
-> LAST UPDATED: 5/26/19
 
 ## Introduction
 Our program will be a basic command shell that will be created using C++. The shell will be able to take in and execute standard commands. It will also have 3 connectors: "||", "&&", and ";". They will allow the user to run multiple commands at once. The composite pattern will be used to handle all commands and operators. We plan on having a base class that connects all of the classes together as an interface. The subclasses will include a regular input class that will take in and execute the commands and operator classes that will build a tree using the operators and command inputs.
@@ -13,13 +12,18 @@ Our program will be a basic command shell that will be created using C++. The sh
 * `parse()` - Provides the interface in which the user can use the console/shell. Takes user input.
 * `init()` - Initializes the command from the "root"
 
-### base.cpp
+### base.h
 Base class, holds virtual functions.
 
-* `Base* left, right`
+* `execute()` - returns true or false if command executed properly
 * `parse()` - parses / splits strings for certain args
 
-* `connector()` - connects strings if parsed
+### connector.h
+Connector class, also holds virtual functions. Serves as a platform for connecting commands whilst helping build our tree stack.
+
+* `Base* left, right` - storage unit for the commands that need to be connected
+* `execute()`
+* `getCommand()`
 
 ### command.cpp
 Process command function, takes in parameter string.
