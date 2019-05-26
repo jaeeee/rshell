@@ -38,6 +38,7 @@ void Client::parse() {
   }
   if (command.at(0) == '[' || command.substr(0,4) == "test") {
     root = new TestCommand(command);
+    cout << "test command bound was: [" << command << "]" << endl;
     // cout << "bound TestCommand" << endl;
   }
   else if (command.find(' ') == -1) { //no spaces found
