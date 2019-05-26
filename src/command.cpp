@@ -23,59 +23,37 @@ class Connector;
 class Base;
 
 bool TestCommand::execute() {
+  // struct stat
   // cout << "EXECUTING [" << cmd << "]" << endl;
-/**
-IF THERE IS A SPACE IN FRONT OF [, WE SHOULD FIX THE STRING
-**/
-size_t index_first_space = cmd.find(" ");
-size_t index_bracket = cmd.find("[");
-int distance = index_first_space - index_bracket;
-string c2, tempString;
-size_t index_e = cmd.find("-e");
-size_t index_f = cmd.find("-f");
-size_t index_d = cmd.find("-d");
-size_t index_test_str = cmd.find("test");
-size_t index_dash = cmd.find("-");
-struct stat stat_f_comparator;
-if (distance == 1) {
-  // cout << "1 index apart" << endl;
-  c2 = cmd.substr(index_first_space + 1, cmd.size() - 4);
-  cout << "(" << c2 << ")" << endl;
-  // cout << "[" << tempString << "]" << endl;
-  // cmd = tempString;
-  // cout << "SPACE FOUND AFTER [" << endl;
-  // tempString = cmd.substr(cmd.find("[") + 2, cmd.size() - 3);
-  // cout << tempString << endl;
-  // stringstream ss(cmd);
-  // ss >> tempString;
-  // // c2 = tempString;
-  // cmd = tempString;
-  // cout << "COMMAND SET: " << cmd;
+  string c2, tempString;
+  size_t index_e = cmd.find("-e");
+  size_t index_f = cmd.find("-f");
+  size_t index_d = cmd.find("-d");
+  size_t index_test_str = cmd.find("test");
+  size_t index_dash = cmd.find("-");
+  struct stat stat_f_comparator;
 
-}
-  if (index_dash != -1) { //WHEN THERE IS NO INPUT / PARAMETER SPECIFIED
+  if (index_dash != -1) {
     if (index_e == -1 && index_f == -1 && index_d == -1) {
       cout << "(False)" << endl;
-      // cout << "invalid input! no parameter specified" << endl;
+      cout << "invalid input! no parameter specified" << endl;
       return false;
     }
     // if (command.at(index_dash ))
   }
 
-  if (c2 == "") {
   if (index_e == -1 && index_f == -1 && index_d == -1) { //none found
     //so use the "-e" by default
-    if (cmd.at(0) == '[' && cmd.at(cmd.size() - 1) == ']' && c2 == "") { //check bounds
+    if (cmd.at(0) == '[' && cmd.at(cmd.size() - 1) == ']') { //check bounds
     c2 = cmd.substr(1, cmd.size() - 2);
-    // stringstream ss(c2);
-    // ss >> tempString;
-    // c2 = tempString;
-    // cout << "IF: (" << c2 << ")" << endl;
+    stringstream ss(c2);
+    ss >> tempString;
+    c2 = tempString;
+    cout << "IF: (" << c2 << ")" << endl;
   } else {
     c2 = cmd.substr(5);
     cout << c2 << endl;
   }
-}
     if (stat(c2.c_str(), &stat_f_comparator) == 0) {
       cout << "(True)" << endl;
       return true;
@@ -89,19 +67,17 @@ if (distance == 1) {
   HANDLE -e HERE
   **/
   if (index_e != -1) {
-    if (c2 == "") {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_e + 3, cmd.size() - 2);
-      // cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
+      stringstream ss(c2);
+      ss >> tempString;
+      c2 = tempString;
+      cout << "FOUND BRACKETS AND -E NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_e + 3);
   }
-} else {
-  tempString = c2.substr(index_e + 3);
-  c2 = tempString;
-}
     if (stat(c2.c_str(), &stat_f_comparator) == 0) {
       cout << "(True)" << endl;
       return true;
@@ -114,20 +90,18 @@ if (distance == 1) {
   /**
   HANDLE -f HERE
   **/
-  if (c2 == "") {
   if (index_f != -1) {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_f + 3, cmd.size() - 2);
+      stringstream ss(c2);
+      ss >> tempString;
+      c2 = tempString;
       // cout << "FOUND BRACKETS AND -f NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_f + 3);
   }
-} else {
-  tempString = c2.substr(index_f + 3);
-  c2 = tempString;
-}
     if (stat(c2.c_str(), &stat_f_comparator) == 0) {
       if (S_ISREG(stat_f_comparator.st_mode)) {
         cout << "(True)" << endl;
@@ -148,20 +122,18 @@ if (distance == 1) {
   /**
   HANDLE -d HERE
   **/
-    if (c2 == "") {
   if (index_d != -1) {
     if (cmd.at(0) == '[' && cmd.at(cmd.size() -1 == ']')) {
       // [tester]
       c2 = cmd.substr(index_d + 3, cmd.size() - 2);
-      // cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
+      stringstream ss(c2);
+      ss >> tempString;
+      c2 = tempString;
+      cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_d + 3);
   }
-} else {
-  tempString = c2.substr(index_d + 3);
-  c2 = tempString;
-}
     if (stat(c2.c_str(), &stat_f_comparator) == 0) {
       if (S_ISDIR(stat_f_comparator.st_mode)) {
         cout << "(True)" << endl;
@@ -178,6 +150,9 @@ if (distance == 1) {
       return false;
     }
   }
+
+
+
   return false;
 }
 
