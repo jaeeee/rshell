@@ -190,7 +190,7 @@ bool TestCommand::execute() {
       stringstream ss(c2);
       ss >> tempString;
       c2 = tempString;
-      cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
+      // cout << "FOUND BRACKETS AND -d NOW: (" <<  c2 << ")" << endl;
     } else {
     //assuming there's no brackets
     c2 = cmd.substr(index_d + 3);
@@ -200,7 +200,7 @@ bool TestCommand::execute() {
         cout << "(True)" << endl;
         return true;
       } else {
-        cout << ("False") << endl;
+        cout << "(False)" << endl;
         return false;
       }
     // }
