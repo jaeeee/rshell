@@ -1,0 +1,4 @@
+(ls; ls)
+echo hi; (echo bye)
+(ls; echo im tired)
+echo a && (echo b; echo c)

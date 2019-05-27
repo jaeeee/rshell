@@ -43,36 +43,37 @@ void Client::parse() {
     // cout << "test command bound was: [" << command << "]" << endl;
     // cout << "bound TestCommand" << endl;
   }
+  else {
   if ((command.find('(') != -1) && (command.find(')') != -1)) {
-    //cout << " why is it here lol" << endl;
     while ((command.find('(') != -1) && (command.find(')') != -1)) {
-      //cout << "size: " << command.size() << endl;
-      //string insideP = command.substr(command.find('(') + 1, command.find(')') - 5);
-      //cout << "insideP = " << insideP << endl;
       int a = command.find('(') + 1;
       int b = command.find(')') - 1;
       string insideP = command.substr(a, b - a + 1);
       parentheses.push(insideP);
-      //cout << "indexes of parentheses: " << command.find('(') << " and " << command.find(')') << endl;
-      //cout << "before command: " << command << endl;
-      //cout << "command: " << command.find(')') << " and " << command.size() - command.find(')') - 1 << endl;
       command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
-      //cout << "left over command: " << command << endl;
     }
     while (!parentheses.empty()) {
       Client * temp = new Client(parentheses.front());
-      //cout << "before parse" << endl;
       temp->parse();
-      //cout << "finished parse" << endl;
       parentheses.pop();
     }
+    if (command == "") {
+      return;
+    }
+  }
+  if (command.at(command.size() - 1) == ' ' || command.at(command.size() - 1) == ';' ) {
+    command = command.substr(0, command.size() - 2);
+  }
+  else if (command.at(command.size() - 1) == '|' || command.at(command.size() - 1) == '&' ) {
+    command = command.substr(0, command.size() - 3);
   }
   if (command.find(' ') == -1) { //no spaces found
     Base* cmd0 = new Command(command);
     // root = cmd0;
     tree.push(cmd0);
     // cout << "no spaces, therefore command is: " << command << endl;
-  } else {
+  }
+  else if (command.find(' ') != -1){
     // cout << "o fuhk spaces found, here we go boys" << endl;
     bool whileCond = true;
     bool first = true;
@@ -148,6 +149,7 @@ void Client::parse() {
       whileCond = false;
     }
   }
+}
 }
 }
     while (!tree.empty()) {
