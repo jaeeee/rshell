@@ -11,6 +11,7 @@ ADD_EXECUTABLE(rshell
     src/command.cpp
     src/and.cpp
     src/semi.cpp
+    src/paren.cpp
 )
 
 ADD_EXECUTABLE(test
@@ -20,6 +21,7 @@ ADD_EXECUTABLE(test
     src/command.cpp
     src/and.cpp
     src/semi.cpp
+    src/paren.cpp
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
