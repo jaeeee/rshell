@@ -191,6 +191,46 @@ TEST(TestCommand, TEST_COMB_TEST) {
   rm4->execute();
 }
 
+TEST(ParenTest, TEST1) {
+  string cmd1 = "(ls)";
+  string cmd2 = "(ls; echo hi)";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new Command(cmd2);
+  EXPECT_TRUE(test1->execute());
+}
+
+TEST(ParenTest, TEST2) {
+  string cmd1 = "(ls)";
+  string cmd2 = "(ls; echo hi)";
+  Base *test1 = new Command(cmd1);
+  Base *test2 = new Command(cmd2);
+  EXPECT_TRUE(test2->execute());
+}
+
+TEST(ParenTest, TEST3) {
+  string cmd1 = "echo hi; (echo hello; echo lol)";
+  //string cmd2 = "(ls; echo hi)";
+  Base *test1 = new Command(cmd1);
+  //Base *test2 = new Command(cmd2);
+  EXPECT_TRUE(test1->execute());
+}
+
+
+TEST(ParenTest, TEST4) {
+  string cmd1 = "echo hi; (echo hello; echo lol)";
+  //string cmd2 = "(ls; echo hi)";
+  Base *test1 = new Command(cmd1);
+  //Base *test2 = new Command(cmd2);
+  EXPECT_TRUE(test1->execute());
+}
+
+TEST(ParenTest, TEST5) {
+  string cmd1 = "(echo hi; echo ok); (echo hello; echo lol)";
+  //string cmd2 = "(ls; echo hi)";
+  Base *test1 = new Command(cmd1);
+  //Base *test2 = new Command(cmd2);
+  EXPECT_TRUE(test1->execute());
+}
 
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);

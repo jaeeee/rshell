@@ -44,112 +44,122 @@ void Client::parse() {
     // cout << "bound TestCommand" << endl;
   }
   else {
-  if ((command.find('(') != -1) && (command.find(')') != -1)) {
-    while ((command.find('(') != -1) && (command.find(')') != -1)) {
-      int a = command.find('(') + 1;
-      int b = command.find(')') - 1;
-      string insideP = command.substr(a, b - a + 1);
-      parentheses.push(insideP);
-      command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
+    if ((command.find('(') != -1) && (command.find(')') != -1)) {
+      while ((command.find('(') != -1) && (command.find(')') != -1)) {
+        int a = command.find('(') + 1;
+        int b = command.find(')') - 1;
+        string insideP = command.substr(a, b - a + 1);
+        parentheses.push(insideP);
+        command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
+      }
+      while (!parentheses.empty()) {
+        Client * temp = new Client(parentheses.front());
+        temp->parse();
+        parentheses.pop();
+      }
+      if (command == "") {
+        return;
+      }
     }
-    while (!parentheses.empty()) {
-      Client * temp = new Client(parentheses.front());
-      temp->parse();
-      parentheses.pop();
-    }
-    if (command == "") {
-      return;
-    }
-  }
-  if (command.at(command.size() - 1) == ' ' || command.at(command.size() - 1) == ';' ) {
-    command = command.substr(0, command.size() - 2);
-  }
-  else if (command.at(command.size() - 1) == '|' || command.at(command.size() - 1) == '&' ) {
-    command = command.substr(0, command.size() - 3);
-  }
-  if (command.find(' ') == -1) { //no spaces found
-    Base* cmd0 = new Command(command);
-    // root = cmd0;
-    tree.push(cmd0);
-    // cout << "no spaces, therefore command is: " << command << endl;
-  }
-  else if (command.find(' ') != -1){
-    // cout << "o fuhk spaces found, here we go boys" << endl;
-    bool whileCond = true;
-    bool first = true;
-    while (whileCond == true) { //while there are spaces...
-      int indexOfSpace = command.find(' ');
-      int numSpacesXD = 0;
-      for (int i = 0; i < command.size(); i++) {
-        if (command.at(i) == ' ') {
-          numSpacesXD++;
+    if (command.size() > 2) {
+      if (command.at(0) == ')') {
+        if (command.at(1) == '&' || command.at(1) == '|') {
+          command = command.substr(4);
+        }
+        else if(command.at(1) == ';') {
+          command = command.substr(2);
         }
       }
-      if (first == false) {
-        if (numSpacesXD == 0) {
-          // cout << "NO MORE SPACES" << endl;
-          // root = new Command(command);
-          tree.push(new Command(command));
-          // this->init();
-          whileCond = false;
-          break;
-        }
-        // cout << command << " F U " << numSpacesXD << endl;
-        string commandCopy = command.substr(command.find(' '), command.size() - 1);
-        // commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
-        // cout << "CUT IT: " << commandCopy << endl;
-        indexOfSpace = commandCopy.find(' ');
-        // indexOfSpace = commandCopy.substr(command.find(' '), command.size() - 1);
-      }
-      if (command.at(indexOfSpace + 1) != '&' &&
-      command.at(indexOfSpace + 1) != '|' &&
-      command.at(indexOfSpace + 1) != ';') {
-        if (command.find('&') != -1) {
-        int indxOfAnd = command.find('&');
-        // ls -l && ls -a
-        // HALP
-        Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
-        Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
-        Base* addCon = new And_Connector(c1, c2);
-        // root = addCon;
-        tree.push(addCon);
-        command = c2->getCommand();
-        // ls -l && echo hi && echo bye
-        first = false;
-        }
-        if (command.find('|') != -1) {
-        int indxOfPipe = command.find('|');
-        Base* c1 = new Command(command.substr(0, indxOfPipe -1));
-        Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
-        Base* pipeCon = new Pipe_Connector(c1, c2);
-        // root = pipeCon;
-          tree.push(pipeCon);
-        command = c2->getCommand();
-        first = false;
-        }
-        if (command.find(';') != -1 ) {
-        int indxOfSemi = command.find(';');
-        Base* c1 = new Command(command.substr(0, indxOfSemi));
-        // cout << (command.substr(0, indxOfSemi)) << endl;
-        Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
-        Base* semiCon = new Semi_Connector(c1, c2);
-        // root = semiCon;
-          tree.push(semiCon);
-        command = c2->getCommand();
-        first = false;
-      } else {
-      //if none of the connectors are found, truncate the string should be saved, removing the last space
-      // Base* commandNoConnectorYet = new Command(command);
-      // //cout << command << endl;
-      // //parent = new Client(command);
-      Base* elseC = new Command(command);
-      tree.push(elseC);
-      // this->init();
-      // cout << "WYD BRO: " << command << endl;
-      whileCond = false;
+    if (command.at(command.size() - 2) == ';' ) {
+      command = command.substr(0, command.size() - 2);
+    }
+    else if (command.at(command.size() - 3) == '|' || command.at(command.size() - 3) == '&' ) {
+      command = command.substr(0, command.size() - 4);
     }
   }
-}
+    if (command.find(' ') == -1) { //no spaces found
+      Base* cmd0 = new Command(command);
+      // root = cmd0;
+      tree.push(cmd0);
+      // cout << "no spaces, therefore command is: " << command << endl;
+    }
+    else if (command.find(' ') != -1){
+      // cout << "o fuhk spaces found, here we go boys" << endl;
+      bool whileCond = true;
+      bool first = true;
+      while (whileCond == true) { //while there are spaces...
+        int indexOfSpace = command.find(' ');
+        int numSpacesXD = 0;
+        for (int i = 0; i < command.size(); i++) {
+          if (command.at(i) == ' ') {
+            numSpacesXD++;
+          }
+        }
+        if (first == false) {
+          if (numSpacesXD == 0) {
+            // cout << "NO MORE SPACES" << endl;
+            // root = new Command(command);
+            tree.push(new Command(command));
+            // this->init();
+            whileCond = false;
+            break;
+          }
+          // cout << command << " F U " << numSpacesXD << endl;
+          string commandCopy = command.substr(command.find(' '), command.size() - 1);
+          // commandCopy = commandCopy.substr(commandCopy.find(' '), commandCopy.size());
+          // cout << "CUT IT: " << commandCopy << endl;
+          indexOfSpace = commandCopy.find(' ');
+          // indexOfSpace = commandCopy.substr(command.find(' '), command.size() - 1);
+        }
+        if (command.at(indexOfSpace + 1) != '&' &&
+        command.at(indexOfSpace + 1) != '|' &&
+        command.at(indexOfSpace + 1) != ';') {
+          if (command.find('&') != -1) {
+          int indxOfAnd = command.find('&');
+          // ls -l && ls -a
+          // HALP
+          Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
+          Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
+          Base* addCon = new And_Connector(c1, c2);
+          // root = addCon;
+          tree.push(addCon);
+          command = c2->getCommand();
+          // ls -l && echo hi && echo bye
+          first = false;
+          }
+          if (command.find('|') != -1) {
+          int indxOfPipe = command.find('|');
+          Base* c1 = new Command(command.substr(0, indxOfPipe -1));
+          Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
+          Base* pipeCon = new Pipe_Connector(c1, c2);
+          // root = pipeCon;
+            tree.push(pipeCon);
+          command = c2->getCommand();
+          first = false;
+          }
+          if (command.find(';') != -1 ) {
+          int indxOfSemi = command.find(';');
+          Base* c1 = new Command(command.substr(0, indxOfSemi));
+          // cout << (command.substr(0, indxOfSemi)) << endl;
+          Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
+          Base* semiCon = new Semi_Connector(c1, c2);
+          // root = semiCon;
+            tree.push(semiCon);
+          command = c2->getCommand();
+          first = false;
+        } else {
+        //if none of the connectors are found, truncate the string should be saved, removing the last space
+        // Base* commandNoConnectorYet = new Command(command);
+        // //cout << command << endl;
+        // //parent = new Client(command);
+        Base* elseC = new Command(command);
+        tree.push(elseC);
+        // this->init();
+        // cout << "WYD BRO: " << command << endl;
+        whileCond = false;
+      }
+    }
+  }
 }
 }
     while (!tree.empty()) {
