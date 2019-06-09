@@ -32,7 +32,7 @@ void Client::parse() {
     root = new TestCommand(command);
   }
   else {
-    if ((command.find('(') != -1) && (command.find(')') != -1)) {
+    if ((command.find('(') != -1) && (command.find(')') != -1)) { // if there are parentheses
       while ((command.find('(') != -1) && (command.find(')') != -1)) {
         int a = command.find('(') + 1;
         int b = command.find(')') - 1;
@@ -50,7 +50,9 @@ void Client::parse() {
       }
     }
     if (command.size() > 2) {
-      if (command.at(0) == ')') {
+      if (command.at(0) == ')') { // if there is a prantheses
+        cout <<"as;dflkj" << endl;
+      //if (command.find('(') && command.find(')')) {
         if (command.at(1) == '&' || command.at(1) == '|') {
           command = command.substr(4);
         }
@@ -121,6 +123,7 @@ void Client::parse() {
           tree.push(semiCon);
           command = c2->getCommand();
           first = false;
+// <<<<<<< HEAD
         }
         /**
         BEGIN PROCESSING OPERATIONS
@@ -153,6 +156,9 @@ void Client::parse() {
           first = false;
         }
         else {
+// =======
+        // } else {
+// >>>>>>> e146634f0188b74a015f5e72ad56772c44f41c18
         //if none of the connectors are found, truncate the string should be saved, removing the last space
         // Base* commandNoConnectorYet = new Command(command);
         // //cout << command << endl;

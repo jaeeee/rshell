@@ -10,12 +10,8 @@ class Base;
 
 class Input : public Connector {
 public:
-  // string param_test;
   Input() {};
-  Input(Base* a, Base* b) {
-    left = a;
-    right = b;
-  };
+  Input(Base* left, Base* right) {};
   bool execute();
   string getCommand();
 };
