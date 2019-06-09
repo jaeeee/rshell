@@ -33,17 +33,29 @@ if (restore < 0) {
 }
 left->execute();
 dup2(savestdin, 0);
-if (close(savestdin) == -1) {
+switch(close(savestdin)) { //converted to switch statement just in case there are any other cases we need
+  //take into account
+  case -1:
   perror("errno");
   exit(1);
   return false;
-} else if (close(savestdin) == 0) {
-    close(savestdin);
-    return true;
+  break;
+  case 0:
+  close(savestdin);
+  return true;
+  break;
 }
+// if (close(savestdin) == -1) {
+//   perror("errno");
+//   exit(1);
+//   return false;
+// } else if (close(savestdin) == 0) {
+//     close(savestdin);
+//     return true;
+// }
 return true;
 }
-// 
+//
 // bool Input::getCommand() {
 //   return left->getCommand() + " < " + right->getCommand();
 // }
