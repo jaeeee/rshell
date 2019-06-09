@@ -11,7 +11,10 @@ class Base;
 class Input : public Connector {
 public:
   Input() {};
-  Input(Base* left, Base* right) {};
+  Input(Base* a, Base* b) {
+    left = a;
+    right = b;
+  };
   bool execute();
   string getCommand();
 };

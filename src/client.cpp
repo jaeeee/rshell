@@ -86,9 +86,11 @@ void Client::parse() {
       Base* cmd0 = new Command(command);
       // root = cmd0;
       tree.push(cmd0);
+      // cout << "no space command found" << endl;
       // cout << "no spaces, therefore command is: " << command << endl;
     }
     else if (command.find(' ') != -1){
+      cout << "now PROCESSING: " << command << endl;
       // cout << "o fuhk spaces found, here we go boys" << endl;
       bool whileCond = true;
       bool first = true;
@@ -108,7 +110,7 @@ void Client::parse() {
           tree.push(cmd0);
           // return;
           whileCond = false;
-                    break;
+          break;
         }
         // else {
           // cout << "executing as found operation " << endl;
@@ -122,6 +124,7 @@ void Client::parse() {
         }
         if (first == false) {
           if (numSpacesXD == 0) {
+            // cout << "no spaces?" << endl;
             tree.push(new Command(command));
             whileCond = false;
             break;
@@ -154,6 +157,11 @@ void Client::parse() {
           if (command.find('|') != -1) {
           int indxOfPipe = command.find('|');
           Base* c1 = new Command(command.substr(0, indxOfPipe -1));
+          if (c1->getCommand().at(0) == '[' || c1->getCommand().substr(0, 4) == "test") {
+            // cout << "TEST COMMAND DETECTED FIRST" << endl;
+              c1 = new TestCommand(command.substr(0, indxOfPipe - 1));
+            // } else
+          }
           Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
           Base* pipeCon = new Pipe_Connector(c1, c2);
           tree.push(pipeCon);
@@ -164,10 +172,48 @@ void Client::parse() {
           if (command.find(';') != -1 ) {
           int indxOfSemi = command.find(';');
           Base* c1 = new Command(command.substr(0, indxOfSemi));
+          if (c1->getCommand().at(0) == '[' || c1->getCommand().substr(0, 4) == "test") {
+            // cout << "TEST COMMAND DETECTED FIRST" << endl;
+              c1 = new TestCommand(command.substr(0, indxOfSemi));
+            // } else
+          }
           Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
           Base* semiCon = new Semi_Connector(c1, c2);
           tree.push(semiCon);
           command = c2->getCommand();
+          first = false;
+          hasOp = true;
+        }
+        /**
+        BEGIN PROCESSING OPERATIONS
+        **/
+        /**
+        IO REDIRECTION
+        **/
+        if (command.find('<') != -1) {
+          // cout << "input redirection detected" << endl;
+          // cout << "HELLO MY FRIENDS " << endl;
+          // cout << command << endl;
+          int indxOfOpen = command.find('<');
+          Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
+          // cout << "[" << c1->getCommand() << "]" << endl;
+          Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
+          // cout << "[" << c2->getCommand() << "]" << endl;
+          // string dude = c2->getCommand();
+          // cout << dude << endl;
+          Input* inputCon = new Input(c1, c2);
+          tree.push(inputCon);
+          command = c2->getCommand();
+          /**
+          INDEPENDENT PROCESSING
+          **/
+          // tree.push(inputCon);
+          // root = tree.top();
+          // tree.pop();
+          // root->execute();
+          // cout << "done" << endl;
+          // return;
+          // command = c2->getCommand();
           first = false;
           hasOp = true;
         }
@@ -180,36 +226,6 @@ void Client::parse() {
           // return;
           // whileCond = false;
           // break;
-        }
-        /**
-        BEGIN PROCESSING OPERATIONS
-        **/
-        /**
-        IO REDIRECTION
-        **/
-        if (command.find('<') != -1) {
-          // cout << "input redirection detected" << endl;
-          // cout << "HELLO MY FRIENDS " << endl;
-          cout << command << endl;
-          int indxOfOpen = command.find('<');
-          Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
-          // cout << "[" << c1->getCommand() << "]" << endl;
-          Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
-          // cout << "[" << c2->getCommand() << "]" << endl;
-          // string dude = c2->getCommand();
-          // cout << dude << endl;
-          Input* inputCon = new Input(c1, c2);
-          /**
-          INDEPENDENT PROCESSING
-          **/
-          tree.push(inputCon);
-          root = tree.top();
-          tree.pop();
-          root->execute();
-          // cout << "done" << endl;
-          return;
-          // command = c2->getCommand();
-          first = false;
         }
         else {
 // =======
