@@ -53,42 +53,44 @@ void Client::parse() {
           string insideP = command.substr(a, b - a + 1);
 
           parentheses.push(insideP);
-          cout << "lol" << endl;
-          command = "";
+          //cout << "lol" << endl;
+          command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
+          //cout << "command: " << command << endl;
         }
         else if (command.at(0) == '(') {
-          cout << "asdfasdf" << endl;
+          //cout << "asdfasdf" << endl;
           int a = command.find('(') + 1;
           int b = command.find(')') - 1;
 
           string insideP = command.substr(a, b - a + 1);
 
           parentheses.push(insideP);
-          cout <<"roght here" << endl;
+          //cout <<"roght here" << endl;
           command = command.substr(command.find(')') + 3, command.size() - command.find(')'));
-          cout << "new command: " << command << endl;
+          //cout << "new command: " << command << endl;
         }
         else {
           int a = command.find('(') + 1;
           int b = command.find(')') - 1;
           string insideP = command.substr(a, b - a + 1); //pushes first command into queue
           parentheses.push(insideP);
-          cout << "old command: " << command << endl;
+          //cout << "old command: " << command << endl;
           command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
           //command = command.substr()
-          cout << "in queue: " << parentheses.front() << endl;
-          cout << "new command: " << command << endl;
+          //cout << "in queue: " << parentheses.front() << endl;
+          //cout << "new command: " << command << endl;
           if(command.at(command.size() - 2) == ';') {
             command = command.substr(0, command.size() - 2);
           }
           if(command.at(command.size() - 2) == '|' || command.at(command.size() - 1) == '&') {
             command = command.substr(0, command.size() - 3);
           }
-          cout << "new command: " << command << endl;
+          //cout << "new command: " << command << endl;
+          //parentheses.push(command);
         }
       }
       while (!parentheses.empty()) { //if prantheses stack isnt empty, execute everyting in it
-        cout << "commandss: " << parentheses.front() << endl;
+        //cout << "commandss: " << parentheses.front() << endl;
         Client * temp = new Client(parentheses.front());
         temp->parse();
         parentheses.pop();
