@@ -94,6 +94,21 @@ void Client::parse() {
           string commandCopy = command.substr(command.find(' '), command.size() - 1);
           indexOfSpace = commandCopy.find(' ');
         }
+        /**
+        BEGIN PROCESSING OPERATIONS
+        **/
+        if (command.find('<') != -1) {
+          cout << "input redirection detected" << endl;
+          int indxOfOpen = command.find('<');
+          Base* c1 = new Command(command.substr(0, indxOfOpen - 1));
+          cout << "[" << c1->getCommand() << "]" << endl;
+          Base* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
+          cout << "[" << c2->getCommand() << "]" << endl;
+          Base* inputCon = new Input(c1, c2);
+          tree.push(inputCon);
+          command = c2->getCommand();
+          first = false;
+        }
         if (command.at(indexOfSpace + 1) != '&' &&
         command.at(indexOfSpace + 1) != '|' &&
         command.at(indexOfSpace + 1) != ';') {
@@ -123,36 +138,7 @@ void Client::parse() {
           tree.push(semiCon);
           command = c2->getCommand();
           first = false;
-        }
-        /**
-        BEGIN PROCESSING OPERATIONS
-        **/
-        /**
-        IO REDIRECTION
-        **/
-        if (command.find('<') != -1) {
-          // cout << "input redirection detected" << endl;
-          int indxOfOpen = command.find('<');
-          Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
-          // cout << "[" << c1->getCommand() << "]" << endl;
-          Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
-          // cout << "[" << c2->getCommand() << "]" << endl;
-          // string dude = c2->getCommand();
-          // cout << dude << endl;
-          Input* inputCon = new Input(c1, c2);
-          /**
-          INDEPENDENT PROCESSING
-          **/
-          tree.push(inputCon);
-          root = tree.top();
-          tree.pop();
-          root->execute();
-          // cout << "done" << endl;
-          return;
-          // command = c2->getCommand();
-          first = false;
-        }
-        else {
+        } else {
         //if none of the connectors are found, truncate the string should be saved, removing the last space
         // Base* commandNoConnectorYet = new Command(command);
         // //cout << command << endl;
