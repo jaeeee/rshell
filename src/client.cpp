@@ -316,7 +316,7 @@ void Client::parse() {
         IO REDIRECTION
         **/
         if (command.find('<') != -1) {
-          cout << "input redirection" << endl;
+          // cout << "input redirection" << endl;
           int indxOfOpen = command.find('<');
           Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
           Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
@@ -325,7 +325,7 @@ void Client::parse() {
           first = false;
         }
         if (command.find('>') != -1) {
-          cout << "input redirection" << endl;
+          // cout << "input redirection" << endl;
           int indxOfOpen = command.find('>');
           Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
           Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
