@@ -13,7 +13,7 @@ public:
   Input() {};
   Input(Base* left, Base* right) {};
   bool execute();
-  // bool getCommand();
+  string getCommand();
 };
 
 #endif

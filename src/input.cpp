@@ -56,6 +56,6 @@ switch(close(savestdin)) { //converted to switch statement just in case there ar
 return true;
 }
 //
-// bool Input::getCommand() {
-//   return left->getCommand() + " < " + right->getCommand();
-// }
+string Input::getCommand() {
+  return left->getCommand() + " < " + right->getCommand();
+}

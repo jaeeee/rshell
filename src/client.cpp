@@ -5,6 +5,8 @@
 #include "../header/and.h"
 #include "../header/semi.h"
 #include "../header/pipe.h"
+#include "../header/input.h"
+#include "../header/iopipe.h"
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -89,6 +91,21 @@ void Client::parse() {
           }
           string commandCopy = command.substr(command.find(' '), command.size() - 1);
           indexOfSpace = commandCopy.find(' ');
+        }
+        /**
+        BEGIN PROCESSING OPERATIONS
+        **/
+        if (command.find('<') != -1) {
+          cout << "input redirection detected" << endl;
+          int indxOfOpen = command.find('<');
+          Base* c1 = new Command(command.substr(0, indxOfOpen - 1));
+          cout << "[" << c1->getCommand() << "]" << endl;
+          Base* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
+          cout << "[" << c2->getCommand() << "]" << endl;
+          Base* inputCon = new Input(c1, c2);
+          tree.push(inputCon);
+          command = c2->getCommand();
+          first = false;
         }
         if (command.at(indexOfSpace + 1) != '&' &&
         command.at(indexOfSpace + 1) != '|' &&
