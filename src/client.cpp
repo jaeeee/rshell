@@ -193,7 +193,7 @@ void Client::parse() {
         if (command.find('<') != -1) {
           // cout << "input redirection detected" << endl;
           // cout << "HELLO MY FRIENDS " << endl;
-          // cout << command << endl;
+          cout << "COMMAND RN: " << command << endl;
           int indxOfOpen = command.find('<');
           Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
           // cout << "[" << c1->getCommand() << "]" << endl;
