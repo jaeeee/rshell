@@ -215,6 +215,7 @@ void Client::parse() {
           }
           if (command.find('|') != -1) {
           int indxOfPipe = command.find('|');
+          if (command.at(indxOfPipe + 1) == '|') {
           Base* c1 = new Command(command.substr(0, indxOfPipe -1));
           if (c1->getCommand().at(0) == '[' || c1->getCommand().substr(0, 4) == "test") {
             // cout << "TEST COMMAND DETECTED FIRST" << endl;
@@ -249,6 +250,9 @@ void Client::parse() {
           command = c2->getCommand();
           first = false;
           hasOp = true;
+        } else {
+          // JASON - IMPLEMENT SINGLE PIPING HERE :)
+        }
           }
           if (command.find(';') != -1 ) {
           int indxOfSemi = command.find(';');
