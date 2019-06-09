@@ -1,0 +1,3 @@
+cat names.txt > names2.txt
+echo blah > blah.txt
+exit
