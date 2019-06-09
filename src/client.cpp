@@ -131,7 +131,7 @@ void Client::parse() {
       bool whileCond = true;
       bool first = true;
       while (whileCond == true) { //while there are spaces...
-        cout << "lol" << endl;
+        //cout << "lol" << endl;
         int indexOfSpace = command.find(' ');
         int numSpacesXD = 0;
         for (int i = 0; i < command.size(); i++) {
@@ -169,12 +169,13 @@ void Client::parse() {
           string commandCopy = command.substr(command.find(' '), command.size() - 1);
           indexOfSpace = commandCopy.find(' ');
         }
-        if (command.at(indexOfSpace + 1) != '&' &&
-        command.at(indexOfSpace + 1) != '|' &&
+        if (command.at(indexOfSpace + 1) != '&' ||
+        command.at(indexOfSpace + 1) != '|' ||
         command.at(indexOfSpace + 1) != ';') {
           // hasOp = true;
           // hasOp = true;
-          if (command.find('&') != -1) {
+          if (command.find('&') != -1) { // if found &&
+            //cout << "FOUND &&" << endl;
           int indxOfAnd = command.find('&');
           Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
           if (c1->getCommand().at(0) == '[' || c1->getCommand().substr(0, 4) == "test") {
@@ -209,9 +210,10 @@ void Client::parse() {
           Base* addCon = new And_Connector(c1, c2);
           tree.push(addCon);
           command = c2->getCommand();
-          // cout << "AND OPERAND PROCESSING RN" << endl;
+          //cout << "AND OPERAND PROCESSING RN" << endl;
           first = false;
           hasOp = true;
+          whileCond = false;
           }
           if (command.find('|') != -1) {
           int indxOfPipe = command.find('|');
@@ -250,8 +252,10 @@ void Client::parse() {
           command = c2->getCommand();
           first = false;
           hasOp = true;
-        } else {
+        }
+        else {
           // JASON - IMPLEMENT SINGLE PIPING HERE :)
+          cout << "lol theres a io pipe only" << endl;
         }
           }
           if (command.find(';') != -1 ) {
@@ -290,7 +294,7 @@ void Client::parse() {
           command = c2->getCommand();
           first = false;
           hasOp = true;
-          // whileCond = false;
+          whileCond = false; // ?
         }
         if (command.at(1) == '[' || command.substr(0,4) == "test") {
           // cout << "hi there" << endl;
@@ -299,7 +303,7 @@ void Client::parse() {
           // root = cmd0;
           tree.push(cmd0);
           // return;
-          // whileCond = false;
+          whileCond = false; // ?
           // break;
         }
         else {
