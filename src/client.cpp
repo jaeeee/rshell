@@ -7,6 +7,7 @@
 #include "../header/pipe.h"
 #include "../header/input.h"
 #include "../header/iopipe.h"
+#include "../header/output.h"
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -191,6 +192,17 @@ void Client::parse() {
             // cout << right->getCommand() << endl;
             c1 = new Input(left,right);
           }
+          if (c1->getCommand().find('>') != -1) {
+            // cout << "< found" << endl;
+            // cout << "[" << c1->getCommand() << "]" << endl;
+            //left
+            //right
+            Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
+            // cout << left->getCommand() << endl;
+            Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 2, c1->getCommand().size() - 1));
+            // cout << right->getCommand() << endl;
+            c1 = new Output(left,right);
+          }
             // }
           Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
           Base* addCon = new And_Connector(c1, c2);
@@ -219,6 +231,17 @@ void Client::parse() {
             // cout << right->getCommand() << endl;
             c1 = new Input(left,right);
           }
+          if (c1->getCommand().find('>') != -1) {
+            // cout << "< found" << endl;
+            // cout << "[" << c1->getCommand() << "]" << endl;
+            //left
+            //right
+            Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
+            // cout << left->getCommand() << endl;
+            Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 2, c1->getCommand().size() - 1));
+            // cout << right->getCommand() << endl;
+            c1 = new Output(left,right);
+          }
           Base* c2 = new Command(command.substr(indxOfPipe +3, command.size() - 1));
           Base* pipeCon = new Pipe_Connector(c1, c2);
           tree.push(pipeCon);
@@ -244,6 +267,17 @@ void Client::parse() {
             Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('<') + 2, c1->getCommand().size() - 1));
             // cout << right->getCommand() << endl;
             c1 = new Input(left,right);
+          }
+          if (c1->getCommand().find('>') != -1) {
+            // cout << "< found" << endl;
+            // cout << "[" << c1->getCommand() << "]" << endl;
+            //left
+            //right
+            Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
+            // cout << left->getCommand() << endl;
+            Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 2, c1->getCommand().size() - 1));
+            // cout << right->getCommand() << endl;
+            c1 = new Output(left,right);
           }
           Base* c2 = new Command(command.substr(indxOfSemi + 2, command.size() - 1));
           Base* semiCon = new Semi_Connector(c1, c2);
@@ -282,32 +316,21 @@ void Client::parse() {
         **/
         if (command.find('<') != -1) {
           cout << "input redirection" << endl;
-          // cout << "input redirection detected" << endl;
-          // cout << "HELLO MY FRIENDS " << endl;
-          // cout << "COMMAND RN: " << command << endl;
           int indxOfOpen = command.find('<');
           Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
-          // cout << "[" << c1->getCommand() << "]" << endl;
           Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
-          // cout << "[" << c2->getCommand() << "]" << endl;
-          // string dude = c2->getCommand();
-          // cout << dude << endl;
           Input* inputCon = new Input(c1, c2);
           elseC = inputCon;
-          // tree.push(inputCon);
-          // command = c2->getCommand();
-          /**
-          INDEPENDENT PROCESSING
-          **/
-          // tree.push(inputCon);
-          // root = tree.top();
-          // tree.pop();
-          // root->execute();
-          // cout << "done" << endl;
-          // return;
-          // command = c2->getCommand();
           first = false;
-          // hasOp = true;
+        }
+        if (command.find('>') != -1) {
+          cout << "input redirection" << endl;
+          int indxOfOpen = command.find('>');
+          Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
+          Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
+          Output* inputCon = new Output(c1, c2);
+          elseC = inputCon;
+          first = false;
         }
         tree.push(elseC);
         whileCond = false;

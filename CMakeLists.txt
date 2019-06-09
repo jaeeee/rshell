@@ -13,6 +13,7 @@ ADD_EXECUTABLE(rshell
     src/semi.cpp
     src/input.cpp
     src/iopipe.cpp
+    src/output.cpp
 )
 
 ADD_EXECUTABLE(test
@@ -24,6 +25,7 @@ ADD_EXECUTABLE(test
     src/semi.cpp
     src/input.cpp
     src/iopipe.cpp
+    src/output.cpp
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
