@@ -77,6 +77,15 @@ Also known as “|”, handles the operator pipe.
 
 * `getCommand()`
 
+### input.cpp
+Handles IO redirection for output "<"
+
+* `Base* left, right`
+
+* `execute()`
+
+* `getCommand()`
+
 
 #
 
