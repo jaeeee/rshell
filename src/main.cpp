@@ -11,6 +11,8 @@
 #include "../header/and.h"
 #include "../header/pipe.h"
 #include "../header/semi.h"
+#include "../header/iopipe.h"
+#include "../header/input.h"
 
 using namespace std;
 

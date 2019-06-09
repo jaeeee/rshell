@@ -10,7 +10,6 @@ Our program will be a basic command shell that will be created using C++. The sh
 
 ### client.cpp
 * `parse()` - Provides the interface in which the user can use the console/shell. Takes user input.
-* `init()` - Initializes the command from the "root"
 
 ### base.h
 Base class, holds virtual functions.
@@ -42,7 +41,7 @@ Also known as “&&” next command executed only if the first command succeeds.
 
 
 ### pipe.cpp
-Also known as “||” next command executed only if the first command fails.
+Also known as “||” next command executed only if the first command fails. NOTE: we named this class before we knew that we had to do the pipe operator, thus we called the actual pipe operator "iopipe.cpp".
 
 * `Base* left, right`
 
@@ -53,6 +52,22 @@ Also known as “||” next command executed only if the first command fails.
 
 ### semi.cpp
 Also known as “;” next command is always executed.
+
+* `Base* left, right`
+
+* `execute()`
+
+* `getCommand()`
+
+### input.cpp
+Handles IO redirection for input "<"
+
+* `Base* left, right`
+
+* `execute()`
+
+### iopipe.cpp
+Also known as “|”, handles the operator pipe.
 
 * `Base* left, right`
 
