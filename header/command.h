@@ -17,6 +17,7 @@ public:
   }
   virtual bool execute();
   string getCommand() {
+    // cout << "hi" << endl;
     return cmd;
   }
 };

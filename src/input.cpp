@@ -16,7 +16,10 @@ class Base;
 class Connector;
 
 bool Input::execute() {
-string nFile = this->right->getCommand();
+  // cout << "omg yay we got it to execute! " << endl;
+string nFile = right->getCommand();
+// cout << right->getCommand();
+// cout << "nFile: " << nFile << endl;
 int file_desc = open(nFile.c_str(), O_RDONLY);
 int savestdin, restore;
 if (file_desc < 0) {
