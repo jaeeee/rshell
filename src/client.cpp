@@ -32,7 +32,7 @@ void Client::parse() {
     root = new TestCommand(command);
   }
   else {
-    if ((command.find('(') != -1) && (command.find(')') != -1)) {
+    if ((command.find('(') != -1) && (command.find(')') != -1)) { // if there are parentheses
       while ((command.find('(') != -1) && (command.find(')') != -1)) {
         int a = command.find('(') + 1;
         int b = command.find(')') - 1;
@@ -50,7 +50,9 @@ void Client::parse() {
       }
     }
     if (command.size() > 2) {
-      if (command.at(0) == ')') {
+      if (command.at(0) == ')') { // if there is a prantheses
+        cout <<"as;dflkj" << endl;
+      //if (command.find('(') && command.find(')')) {
         if (command.at(1) == '&' || command.at(1) == '|') {
           command = command.substr(4);
         }
