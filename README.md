@@ -66,6 +66,8 @@ Handles IO redirection for input "<"
 
 * `execute()`
 
+* `getCommand()`
+
 ### iopipe.cpp
 Also known as “|”, handles the operator pipe.
 
