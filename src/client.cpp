@@ -131,6 +131,7 @@ void Client::parse() {
       bool whileCond = true;
       bool first = true;
       while (whileCond == true) { //while there are spaces...
+        cout << "lol" << endl;
         int indexOfSpace = command.find(' ');
         int numSpacesXD = 0;
         for (int i = 0; i < command.size(); i++) {
@@ -138,7 +139,7 @@ void Client::parse() {
             numSpacesXD++;
           }
         }
-        if (command.at(0) == '[' || command.substr(0,4) == "test") {
+        if (command.at(0) == '[' || command.substr(0,4) == "test") { //if its a test or a [ command
           if (command.find('&') == -1 && command.find('|') == -1 && command.find(';') == -1) {
           // cout << "executing as single command" << endl;
           Base* cmd0 = new TestCommand(command);
