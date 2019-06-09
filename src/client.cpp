@@ -90,7 +90,7 @@ void Client::parse() {
       // cout << "no spaces, therefore command is: " << command << endl;
     }
     else if (command.find(' ') != -1){
-      cout << "now PROCESSING: " << command << endl;
+      // cout << "now PROCESSING: " << command << endl;
       // cout << "o fuhk spaces found, here we go boys" << endl;
       bool whileCond = true;
       bool first = true;

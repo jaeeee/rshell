@@ -23,6 +23,7 @@ class Connector;
 
 bool IOPipe::execute() {
 //TODO
+return false;
 }
 
 string IOPipe::getCommand() {
