@@ -125,7 +125,7 @@ void Client::parse() {
       // cout << "no spaces, therefore command is: " << command << endl;
     }
     else if (command.find(' ') != -1){
-      cout << "now PROCESSING: " << command << endl;
+      // cout << "now PROCESSING: " << command << endl;
       // cout << "o fuhk spaces found, here we go boys" << endl;
       bool whileCond = true;
       bool first = true;
@@ -139,7 +139,7 @@ void Client::parse() {
         }
         if (command.at(0) == '[' || command.substr(0,4) == "test") {
           if (command.find('&') == -1 && command.find('|') == -1 && command.find(';') == -1) {
-          cout << "executing as single command" << endl;
+          // cout << "executing as single command" << endl;
           Base* cmd0 = new TestCommand(command);
           // root = cmd0;
           tree.push(cmd0);
@@ -208,7 +208,7 @@ void Client::parse() {
               c1 = new TestCommand(command.substr(0, indxOfPipe - 1));
             // } else
           }
-          if (c1->getCommand().find('<')) {
+          if (c1->getCommand().find('<') != -1) {
             // cout << "< found" << endl;
             // cout << "[" << c1->getCommand() << "]" << endl;
             //left
@@ -234,7 +234,7 @@ void Client::parse() {
               c1 = new TestCommand(command.substr(0, indxOfSemi));
             // } else
           }
-          if (c1->getCommand().find('<')) {
+          if (c1->getCommand().find('<') != -1) {
             // cout << "< found" << endl;
             // cout << "[" << c1->getCommand() << "]" << endl;
             //left
@@ -281,6 +281,7 @@ void Client::parse() {
         IO REDIRECTION
         **/
         if (command.find('<') != -1) {
+          cout << "input redirection" << endl;
           // cout << "input redirection detected" << endl;
           // cout << "HELLO MY FRIENDS " << endl;
           // cout << "COMMAND RN: " << command << endl;
