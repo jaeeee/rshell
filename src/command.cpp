@@ -73,6 +73,7 @@ bool Command::execute() {
   if (fork() == 0) { //wait for child
     if (execvp (args[0],args) == -1) {
       perror("exec");
+      // cout << "ERROR" << endl;
       return false;
     }
   }

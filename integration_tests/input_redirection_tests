@@ -1,0 +1,5 @@
+tail < CMakeLists.txt || ls -a
+head < CMakeLists.txt && ls -l
+wc < names.txt
+wc -l < names.txt && bruh
+exit
