@@ -22,14 +22,12 @@ void Client::parse() {
   string c2str;
   stack<Base*> tree;
   queue<string> parentheses;
+  bool hasOp = false;
   if (command.find('#') != -1) { //found #
     int indexOfPound = command.find('#');
     string substringedCommand = command.substr(0, indexOfPound);
     Base* cmdPound = new Command(substringedCommand);
     tree.push(cmdPound);
-  }
-  if (command.at(0) == '[' || command.substr(0,4) == "test") {
-    root = new TestCommand(command);
   }
   else {
     if ((command.find('(') != -1) && (command.find(')') != -1)) { // if there are parentheses
@@ -102,6 +100,26 @@ void Client::parse() {
             numSpacesXD++;
           }
         }
+        if (command.at(0) == '[' || command.substr(0,4) == "test") {
+          if (command.find('&') == -1 && command.find('|') == -1 && command.find(';') == -1) {
+          cout << "executing as single command" << endl;
+          Base* cmd0 = new TestCommand(command);
+          // root = cmd0;
+          tree.push(cmd0);
+          // return;
+          whileCond = false;
+                    break;
+        }
+        // else {
+          // cout << "executing as found operation " << endl;
+          // Base* cmd0 = new TestCommand(command);
+          // // root = cmd0;
+          // tree.push(cmd0);
+          // // return;
+          // whileCond = false;
+        // }
+        // cout << "command now: " << command << endl;
+        }
         if (first == false) {
           if (numSpacesXD == 0) {
             tree.push(new Command(command));
@@ -114,14 +132,24 @@ void Client::parse() {
         if (command.at(indexOfSpace + 1) != '&' &&
         command.at(indexOfSpace + 1) != '|' &&
         command.at(indexOfSpace + 1) != ';') {
+          // hasOp = true;
+          // hasOp = true;
           if (command.find('&') != -1) {
           int indxOfAnd = command.find('&');
           Base* c1 = new Command(command.substr(0, indxOfAnd - 1));
+          if (c1->getCommand().at(0) == '[' || c1->getCommand().substr(0, 4) == "test") {
+            // cout << "TEST COMMAND DETECTED FIRST" << endl;
+              c1 = new TestCommand(command.substr(0, indxOfAnd - 1));
+            // } else
+          }
+            // }
           Base* c2 = new Command(command.substr(indxOfAnd + 3, command.size() - 1));
           Base* addCon = new And_Connector(c1, c2);
           tree.push(addCon);
           command = c2->getCommand();
+          // cout << "AND OPERAND PROCESSING RN" << endl;
           first = false;
+          hasOp = true;
           }
           if (command.find('|') != -1) {
           int indxOfPipe = command.find('|');
@@ -131,6 +159,7 @@ void Client::parse() {
           tree.push(pipeCon);
           command = c2->getCommand();
           first = false;
+          hasOp = true;
           }
           if (command.find(';') != -1 ) {
           int indxOfSemi = command.find(';');
@@ -140,7 +169,17 @@ void Client::parse() {
           tree.push(semiCon);
           command = c2->getCommand();
           first = false;
-// <<<<<<< HEAD
+          hasOp = true;
+        }
+        if (command.at(1) == '[' || command.substr(0,4) == "test") {
+          // cout << "hi there" << endl;
+          // cout << "command rn: " << command << endl;
+          TestCommand* cmd0 = new TestCommand(command);
+          // root = cmd0;
+          tree.push(cmd0);
+          // return;
+          // whileCond = false;
+          // break;
         }
         /**
         BEGIN PROCESSING OPERATIONS
@@ -181,6 +220,7 @@ void Client::parse() {
         // //cout << command << endl;
         // //parent = new Client(command);
         Base* elseC = new Command(command);
+        // cout << "elseC: " << elseC->getCommand() << endl;
         tree.push(elseC);
         whileCond = false;
       }
@@ -188,9 +228,18 @@ void Client::parse() {
   }
 }
 }
+  bool firstCommand = true;
     while (!tree.empty()) {
+      // cout << "HELLO:" << tree.top()->getCommand() << endl;
       root = tree.top();
       tree.pop();
+      if (hasOp == false) {
+        // cout << "NO OP" << endl;
+        root->execute();
+      }
+      if (firstCommand == false && hasOp == true) {
+      root->execute();
     }
-    root->execute();
+    firstCommand = false;
+    }
 }
