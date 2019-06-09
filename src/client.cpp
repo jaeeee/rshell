@@ -208,7 +208,7 @@ void Client::parse() {
               c1 = new TestCommand(command.substr(0, indxOfPipe - 1));
             // } else
           }
-          if (c1->getCommand().find('<')) {
+          if (c1->getCommand().find('<') != -1) {
             // cout << "< found" << endl;
             // cout << "[" << c1->getCommand() << "]" << endl;
             //left
@@ -234,7 +234,7 @@ void Client::parse() {
               c1 = new TestCommand(command.substr(0, indxOfSemi));
             // } else
           }
-          if (c1->getCommand().find('<')) {
+          if (c1->getCommand().find('<') != -1) {
             // cout << "< found" << endl;
             // cout << "[" << c1->getCommand() << "]" << endl;
             //left
@@ -281,6 +281,7 @@ void Client::parse() {
         IO REDIRECTION
         **/
         if (command.find('<') != -1) {
+          cout << "input redirection" << endl;
           // cout << "input redirection detected" << endl;
           // cout << "HELLO MY FRIENDS " << endl;
           // cout << "COMMAND RN: " << command << endl;
