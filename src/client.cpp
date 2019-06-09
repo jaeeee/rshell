@@ -256,6 +256,18 @@ void Client::parse() {
         else {
           // JASON - IMPLEMENT SINGLE PIPING HERE :)
           cout << "lol theres a io pipe only" << endl;
+          // assuming te command looks like this input1 | input2
+          int indxOfIOpipe = command.find('|');
+
+          Base * c1 = new Command(command.substr(0, indxOfIOpipe - 1));
+          Base * c2 = new Command(command.substr(indxOfIOpipe + 1, command.size() - indxOfIOpipe));
+
+          IOPipe * temp = new IOPipe(c1,c2);
+          tree.push (temp);
+
+          first = false;
+          hasOp = true;
+          whileCond = false; // ?
         }
           }
           if (command.find(';') != -1 ) {
