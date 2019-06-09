@@ -22,7 +22,16 @@ class Base;
 class Connector;
 
 bool IOPipe::execute() {
-//TODO
+
+  int fds[2];
+
+  if (fork() == 0) { // child executes this
+    cout << "??" << endl;
+  }
+  else { //parent executes this
+    cout << "lol" << endl;
+  }
+
 return false;
 }
 
