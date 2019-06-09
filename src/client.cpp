@@ -33,14 +33,32 @@ void Client::parse() {
   }
   else {
     if ((command.find('(') != -1) && (command.find(')') != -1)) { // if there are parentheses
-      while ((command.find('(') != -1) && (command.find(')') != -1)) {
+      int parenCount1 = 0;
+      int parenCount2 = 0;
+      for (int i = 0; i < command.size(); i++) {
+        if (command.at(i) == '(') {
+          parenCount1++;
+        }
+        if (command.at(i) == ')') {
+          parenCount2++;
+        }
+      }
+      if (parenCount1 != parenCount2) {
+        cout << "Error with parentheses" << endl;
+        return;
+      }
+      while ((command.find('(') != -1) && (command.find(')') != -1)) { //whihle there is still parentheses
         int a = command.find('(') + 1;
         int b = command.find(')') - 1;
-        string insideP = command.substr(a, b - a + 1);
+        string insideP = command.substr(a, b - a + 1); //pushes first command into queue
         parentheses.push(insideP);
+        cout << "old command: " << command << endl;
         command = command.substr(0,command.find('(')) + command.substr(command.find(')'), command.size() - command.find(')') - 1);
+        //command = command.substr()
+        cout << "in queue: " << parentheses.front() << endl;
+        cout << "new command: " << command << endl;
       }
-      while (!parentheses.empty()) {
+      while (!parentheses.empty()) { //if prantheses stack isnt empty, execute everyting in it
         Client * temp = new Client(parentheses.front());
         temp->parse();
         parentheses.pop();
@@ -51,7 +69,6 @@ void Client::parse() {
     }
     if (command.size() > 2) {
       if (command.at(0) == ')') { // if there is a prantheses
-        cout <<"as;dflkj" << endl;
       //if (command.find('(') && command.find(')')) {
         if (command.at(1) == '&' || command.at(1) == '|') {
           command = command.substr(4);
