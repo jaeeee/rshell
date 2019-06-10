@@ -10,10 +10,12 @@ class Base;
 
 class Output : public Connector {
 public:
+  bool flag = false;
   Output() {};
-  Output(Base* a, Base* b) {
+  Output(Base* a, Base* b, bool c) {
     left = a;
     right = b;
+    flag = c;
   };
   bool execute();
   string getCommand();

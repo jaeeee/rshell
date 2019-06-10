@@ -77,10 +77,12 @@ Also known as “|”, handles the operator pipe.
 
 * `getCommand()`
 
-### input.cpp
-Handles IO redirection for output "<"
+### output.cpp
+Handles IO redirection for output ">". Utilizes a flag feature to tell if it's ">" or ">>". 
 
 * `Base* left, right`
+
+* `bool flag`
 
 * `execute()`
 
