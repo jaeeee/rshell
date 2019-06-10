@@ -2,4 +2,8 @@ tail < CMakeLists.txt || ls -a
 head < CMakeLists.txt && ls -l
 wc < names.txt
 wc -l < names.txt && bruh
+tail < names.txt && echo tailerinoyes
+head < names.txt || (ls)
+tail < CMakeLists.txt || echo hi
+head < CMakeLists.txt && echo sigh
 exit

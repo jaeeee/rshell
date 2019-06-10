@@ -1,3 +1,7 @@
 cat names.txt > names2.txt
 echo blah > blah.txt
+echo hello3 >> names.txt
+ls >> ls.txt
+echo yo > ls.txt
+echo hellofriend >> ls.txt && echo hi
 exit

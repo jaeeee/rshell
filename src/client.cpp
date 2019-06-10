@@ -194,6 +194,17 @@ void Client::parse() {
             // cout << right->getCommand() << endl;
             c1 = new Input(left,right);
           }
+          if (c1->getCommand().find('|') != -1) {
+            // cout << "< found" << endl;
+            // cout << "[" << c1->getCommand() << "]" << endl;
+            //left
+            //right
+            Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('|')));
+            // cout << left->getCommand() << endl;
+            Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('|') + 2, c1->getCommand().size() - 1));
+            // cout << right->getCommand() << endl;
+            c1 = new IOPipe(left,right);
+          }
           if (c1->getCommand().find('>') != -1) {
             // cout << c1->getCommand().at(c1->getCommand().find('>') + 1) << endl;
             if (c1->getCommand().at(c1->getCommand().find('>') + 1) == '>') { //second >
@@ -258,7 +269,7 @@ void Client::parse() {
         }
         else {
           // JASON - IMPLEMENT SINGLE PIPING HERE :)
-          cout << "lol theres a io pipe only" << endl;
+          // cout << "lol theres a io pipe only" << endl;
           // assuming te command looks like this input1 | input2
           int indxOfIOpipe = command.find('|');
 
@@ -291,6 +302,17 @@ void Client::parse() {
             Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('<') + 2, c1->getCommand().size() - 1));
             // cout << right->getCommand() << endl;
             c1 = new Input(left,right);
+          }
+          if (c1->getCommand().find('|') != -1) {
+            // cout << "< found" << endl;
+            // cout << "[" << c1->getCommand() << "]" << endl;
+            //left
+            //right
+            Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('|')));
+            // cout << left->getCommand() << endl;
+            Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('|') + 2, c1->getCommand().size() - 1));
+            // cout << right->getCommand() << endl;
+            c1 = new IOPipe(left,right);
           }
           if (c1->getCommand().find('>') != -1) {
             if (c1->getCommand().at(c1->getCommand().find('>') + 1) == '>') { //second >
@@ -345,6 +367,15 @@ void Client::parse() {
           Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
           Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
           Input* inputCon = new Input(c1, c2);
+          elseC = inputCon;
+          first = false;
+        }
+        if (command.find('|') != -1) {
+          // cout << "input redirection" << endl;
+          int indxOfOpen = command.find('|');
+          Command* c1 = new Command(command.substr(0, indxOfOpen - 1));
+          Command* c2 = new Command(command.substr(indxOfOpen + 2, command.size() - 1));
+          IOPipe* inputCon = new IOPipe(c1, c2);
           elseC = inputCon;
           first = false;
         }
