@@ -16,11 +16,11 @@ class Base;
 class Connector;
 
 bool Output::execute() {
-  if (this->flag == true) {
-    cout << "double detected (>>)" << endl;
-  } else {
-    cout << "default detected (>)" << endl;
-  }
+  // if (this->flag == true) {
+  //   cout << "double detected (>>)" << endl;
+  // } else {
+  //   cout << "default detected (>)" << endl;
+  // }
   int file_desc, return_val, savedstdout;
   string nFile = right->getCommand();
   file_desc = open(nFile.c_str(), O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
