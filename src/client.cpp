@@ -197,7 +197,7 @@ void Client::parse() {
           if (c1->getCommand().find('>') != -1) {
             // cout << c1->getCommand().at(c1->getCommand().find('>') + 1) << endl;
             if (c1->getCommand().at(c1->getCommand().find('>') + 1) == '>') { //second >
-                        cout << "yuh double" << endl;
+                        // cout << "yuh double" << endl;
             Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
             Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 3, c1->getCommand().size() - 1));
             c1 = new Output(left,right, true);
@@ -242,7 +242,7 @@ void Client::parse() {
             Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
             Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 3, c1->getCommand().size() - 1));
             c1 = new Output(left,right, true);
-              cout << "yuh double" << endl;
+              // cout << "yuh double" << endl;
           } else {
             Command* left = new Command(c1->getCommand().substr(0, c1->getCommand().find('>')));
             Command* right = new Command(c1->getCommand().substr(c1->getCommand().find('>') + 2, c1->getCommand().size() - 1));
