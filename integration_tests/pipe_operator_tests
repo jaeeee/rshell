@@ -1,0 +1,9 @@
+ls | less
+ls | more
+cat < names.txt | more
+cat CMakeLists.txt | sort -r
+ls | more && echo moredone
+ls | less && echo lessdone
+ls | sort -r && echo sorted
+cat < CMakeLists.txt | less
+exit
