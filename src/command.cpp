@@ -80,6 +80,7 @@ bool Command::execute() {
   else {
     wait(NULL);
   }
+  cout << endl;
   return true;
 }
 
