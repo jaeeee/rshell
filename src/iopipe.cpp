@@ -8,13 +8,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-// #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <cstdlib>
 #include <iostream>
-
-// #include <stat/stat.h>
 
 using namespace std;
 
@@ -23,82 +20,43 @@ class Connector;
 
 bool IOPipe::execute() {
     int file_desc[2];
-    int pipe1 = pipe(file_desc);
     pid_t pid1;
     pid_t pid2;
     int temp;
 
-   if (pipe1 < 0) {  //error
-     perror("pipe");
-     exit(1);
+   if (pipe(file_desc) < 0) {
      return false;
    }
-
     pid1 = fork();
-
     if (pid1 < 0) {
-      perror("fork");
-      exit(1);
       return false;
-    }
-
-    if (pid1 == 0) {
+    } else if (pid1 == 0) {
       pid2 = fork();
-      if (pid2 < 0) {
-        perror("fork");
-        exit(1);
+      switch(true) {
+        case (pid2 == 0):
+        if (dup2(file_desc[1], 1) < 0 || close(file_desc[0]) < 0 || left->execute() == false) {
+          return false;
+        }
+                exit(0);
+        break;
+        case (pid2 < 0):
+        cout << "error in forking" << endl;
         return false;
-      }
-    else if (pid2 == 0) {
-        if (dup2(file_desc[1], 1) < 0) {
-          perror("dup2");
-          exit(1);
+        break;
+        default:
+        if (dup2(file_desc[0], 0) < 0 || close(file_desc[1]) < 0 || right->execute() == false) {
           return false;
         }
-        if (close(file_desc[0]) < 0) {
-          perror("errno");
-          exit(1);
-          return false;
-        }
-        if (left->execute() == false) {
-          exit(1);
-          return false;
-        }
-        exit(0);
-      }
-      else {
-        if (dup2(file_desc[0], 0) < 0) {
-          perror("dup2");
-          exit(1);
-          return false;
-        }
-        if (close(file_desc[1]) < 0) {
-          perror("errno");
-          exit(1);
-          return false;
-        }
-        if (!right->execute()) {
-          exit(1);
-          return false;
-        }
-        exit(0);
+          exit(0);
+          break;
       }
     }
-
-    if (close(file_desc[0]) < 0) {
+    if (close(file_desc[0]) < 0 || close(file_desc[1]) < 0) {
       perror("errno");
       exit(1);
       return false;
     }
-
-    if (close(file_desc[1]) < 0) {
-      perror("errno");
-      exit(1);
-      return false;
-    }
-
     waitpid(pid1, &temp, 0);
-
     while (!WIFEXITED(temp)) {
     }
     waitpid(pid1, &temp, 0);
@@ -113,12 +71,6 @@ bool IOPipe::execute() {
       return false;
       break;
     }
-    // else if (WEXITSTATUS(temp) == 0) {
-    //   return true;
-    // }
-    // else if (WEXITSTATUS(temp) == 1) {
-    //   return false;
-    // }
     return false;
 }
 
