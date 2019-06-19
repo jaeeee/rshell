@@ -1,3 +1,22 @@
+/**
+I am rewriting this function so I can demonstrate that I know what piping does.
+Updated so that it checks command execution because it would be
+redunant to check everything if the command doesn't even run.
+Removed status variable because we can just return the the result (bool)
+by error checking each phase.
+We will continue using exit calls alongside returns because we would still
+like to know the current status of the program. Unless I find another way for
+the function to give the user a boolean result without influencing the actual
+logic.
+I have learned that exit(1) is for exiting due to a failure
+On the contrary, exit(0) would be formally defined as an EXIT_SUCCESS
+Below are the notes that I took from reading and watching online videos on how to do pipe.
+If fork is called and it returns a negative value, that means the creation of the child process has failed.
+Returns 0 to newly created child process
+Make a file descriptor array of size 2 (fd[2])
+Notes are continued in the PSUEDOCODE comments block starting 4 lines below.
+**/
+
 #include "../header/iopipe.h"
 #include "../header/base.h"
 #include "../header/connector.h"
@@ -17,24 +36,6 @@ Forward declaration of classes neccessary for the class to compile without error
 **/
 class Base;
 class Connector;
-
-/**
-I am rewriting this function so I can demonstrate that I know what piping does.
-Updated so that it checks command execution because it would be
-redunant to check everything if the command doesn't even run.
-Removed status variable because we can just return the the result (bool)
-by error checking each phase.
-We will continue using exit calls alongside returns because we would still
-like to know the current status of the program. Unless I find another way for
-the function to give the user a boolean result without influencing the actual
-logic.
-I have learned that exit(1) is for exiting due to a failure
-On the contrary, exit(0) would be formally defined as an EXIT_SUCCESS
-Below are the notes that I took from reading and watching online videos on how to do pipe.
-If fork is called and it returns a negative value, that means the creation of the child process has failed.
-Returns 0 to newly created child process
-Make a file descriptor array of size 2 (fd[2])
-**/
 
 bool IOPipe::execute() {
   /**
@@ -62,6 +63,12 @@ bool IOPipe::execute() {
   Pid1 and pid2 (two children processes)
   singular integer for status (temp)
   **/
+
+/**
+Variable declarations here
+**/
+int file_desc[2];
+pid_t pid1, pid2;
 
 if (pipe(file_desc) < 0) {
   perror("pipe");
