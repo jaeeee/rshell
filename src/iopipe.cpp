@@ -18,46 +18,71 @@ using namespace std;
 class Base;
 class Connector;
 
+
 bool IOPipe::execute() {
     int file_desc[2];
-    pid_t pid1;
-    pid_t pid2;
-    int temp;
-
-   if (pipe(file_desc) < 0) {
-     return false;
-   }
-    pid1 = fork();
-    if (pid1 < 0) {
-      return false;
-    } else if (pid1 == 0) {
-      pid2 = fork();
-      switch(true) {
-        case (pid2 == 0):
-        if (dup2(file_desc[1], 1) < 0 || close(file_desc[0]) < 0 || left->execute() == false) {
-          return false;
-        }
-                exit(0);
-        break;
-        case (pid2 < 0):
-        cout << "error in forking" << endl;
-        return false;
-        break;
-        default:
-        if (dup2(file_desc[0], 0) < 0 || close(file_desc[1]) < 0 || right->execute() == false) {
-          return false;
-        }
-          exit(0);
-          break;
-      }
-    }
-    if (close(file_desc[0]) < 0 || close(file_desc[1]) < 0) {
-      perror("errno");
+    pid_t pid1; // child process 1
+    pid_t pid2; // child process 2
+    int temp; // status variable
+// use pipe function to check initially for any errors
+if (pipe(file_desc) < 0) {
+  perror("pipe");
+  exit(1);
+  return false;
+} else {
+  //create first fork
+  pid1 = fork();
+  if (pid1 < 0) {
+    perror("fork");
+    exit(1);
+    return false;
+  } else {
+  if (pid1 == 0) {
+    //if success, call fork again
+    pid2 = fork();
+    if (pid2 < 0) {
+      perror("fork");
       exit(1);
       return false;
     }
+    if (pid2 == 0) {
+      //attempt left side piping
+      int try_left = dup2(file_desc[1], 1);
+      if (try_left < 0 || (close(file_desc[0]) < 0)) {
+        exit(1);
+        return false;
+      }
+      if (left->execute() == false) {
+        cout << "left execution failed" << endl;
+        exit(1);
+        return false;
+      }
+      exit(0);
+    } else {
+      //attempt right side piping
+      int try_right = dup2(file_desc[0], 0);
+      if (try_right < 0 || (close(file_desc[1]) < 0)) {
+        exit(1);
+        return false;
+      }
+      if (right->execute() == false) {
+        cout << "right execution failed" << endl;
+        exit(1);
+        return false;
+      }
+      exit(0);
+    }
+  }
+}
+}
+if (close(file_desc[1]) < 0 || close(file_desc[0] < 0)) {
+  perror("errno");
+  exit(1);
+  return false;
+}
     waitpid(pid1, &temp, 0);
     while (!WIFEXITED(temp)) {
+      cout << "changing status here" << endl;
     }
     waitpid(pid1, &temp, 0);
     if (temp > 0) {
@@ -67,12 +92,16 @@ bool IOPipe::execute() {
       case 0:
       return true;
       break;
-      case 1:
+
+  default:
       return false;
       break;
-    }
+
+}
     return false;
 }
+
+
 
 string IOPipe::getCommand() {
   return left->getCommand() + " | " + right->getCommand();
