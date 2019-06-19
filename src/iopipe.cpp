@@ -20,6 +20,9 @@ class Connector;
 
 
 bool IOPipe::execute() {
+  /**
+  Works in some cases, some cases not working fully.
+  **/
     int file_desc[2];
     pid_t pid1; // child process 1
     pid_t pid2; // child process 2
@@ -38,6 +41,7 @@ if (pipe(file_desc) < 0) {
     return false;
   } else {
   if (pid1 == 0) {
+    // cout << "good job" << endl;
     //if success, call fork again
     pid2 = fork();
     if (pid2 < 0) {
@@ -49,15 +53,15 @@ if (pipe(file_desc) < 0) {
       //attempt left side piping
       int try_left = dup2(file_desc[1], 1);
       if (try_left < 0 || (close(file_desc[0]) < 0)) {
-        exit(1);
+        // exit(1);
         return false;
       }
       if (left->execute() == false) {
         cout << "left execution failed" << endl;
-        exit(1);
+        // exit(1);
         return false;
       }
-      exit(0);
+      exit(0); //success termination
     } else {
       //attempt right side piping
       int try_right = dup2(file_desc[0], 0);
@@ -70,34 +74,31 @@ if (pipe(file_desc) < 0) {
         exit(1);
         return false;
       }
-      exit(0);
+      exit(0); //success termination
     }
   }
 }
+//fixed infinite loop issue
+cout << "we made it if we got to here." << endl;
+exit(0);
+return true;
 }
-if (close(file_desc[1]) < 0 || close(file_desc[0] < 0)) {
-  perror("errno");
-  exit(1);
-  return false;
-}
-    waitpid(pid1, &temp, 0);
-    while (!WIFEXITED(temp)) {
-      cout << "changing status here" << endl;
-    }
-    waitpid(pid1, &temp, 0);
-    if (temp > 0) {
-      return false;
-    }
-    switch(WEXITSTATUS(temp)) {
-      case 0:
-      return true;
-      break;
-
-  default:
-      return false;
-      break;
-
-}
+// if (close(file_desc[1]) < 0 || close(file_desc[0] < 0)) {
+//   perror("errno");
+//   exit(1);
+//   return false;
+// }
+//     waitpid(pid1, &temp, 0);
+//     while (!WIFEXITED(temp)) {
+//       cout << "changing status here" << endl;
+//     }
+//     waitpid(pid1, &temp, 0);
+//     if (temp > 0 || WEXITSTATUS(temp) == 0) {
+//       return false;
+//     } else {
+//       cout << "everything should be fine here" << endl;
+//         return true;
+//     }
     return false;
 }
 
