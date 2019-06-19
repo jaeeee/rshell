@@ -1,4 +1,11 @@
 /**
+
+I have been using switch statements because I was used to doing them when I was still programming in Java (years ago),
+I also thought that maybe there would be more cases so a switch statement would've been more effective that a bunch out
+if statements, when checking for the status of fork, but forgot that there was basically only two values that fork can return,
+they were -1 or 0. I also thought that there would be multiple exit statuses so there would be more cases to handle (for piping)
+but again, there would only a couple (2) that I called in this class' execution function. They were: exit(1) and exit(0).
+
 I am rewriting this function so I can demonstrate that I know what piping does.
 Updated so that it checks command execution because it would be
 redunant to check everything if the command doesn't even run.
